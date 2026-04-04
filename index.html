@@ -1,0 +1,905 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<!--
+  FOLDER STRUCTURE:
+  portfolio/
+  ├── index.html
+  ├── profile.jpg
+  └── Ajibade_Omotolani_CV.docx
+
+  Project files are now stored in Supabase Storage (project-files bucket).
+  ADMIN: Click the logo 5 times → login with omotolaniayinke863@gmail.com
+  CONTACT FORM: replace YOUR_FORM_ID at formspree.io
+-->
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta name="description" content="Omotolani Ajibade — Data Analyst & Business Analyst, Lagos, Nigeria."/>
+  <title>Omotolani Ajibade | Data Analyst</title>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600&display=swap" rel="stylesheet"/>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.js"></script>
+  <style>
+    :root{--black:#0e0e0e;--white:#fafaf8;--accent:#1a3a5c;--accent2:#2e6da4;--al:#e8f0f8;--muted:#888880;--border:#e5e5e0;--card:#f4f4f0;--nbg:rgba(250,250,248,0.95);}
+    body.dark{--white:#0a1628;--black:#e0e8f0;--card:#111c2e;--border:#1e2d42;--muted:#7a8fa6;--al:#1a2d44;--nbg:rgba(10,22,40,0.95);}
+    *{margin:0;padding:0;box-sizing:border-box;}
+    html{scroll-behavior:smooth;}
+    body{font-family:'DM Sans',sans-serif;background:var(--white);color:var(--black);font-size:16px;line-height:1.6;transition:background .3s,color .3s;}
+    #prog{position:fixed;top:0;left:0;height:3px;width:0%;background:linear-gradient(90deg,var(--accent2),#5ba3d9);z-index:9999;pointer-events:none;}
+    .toast{position:fixed;bottom:28px;left:50%;transform:translateX(-50%) translateY(80px);background:#1a3a5c;color:#fff;padding:12px 24px;border-radius:6px;font-size:14px;z-index:9998;transition:transform .3s;pointer-events:none;max-width:90vw;text-align:center;}
+    .toast.show{transform:translateX(-50%) translateY(0);}
+    .banner{background:linear-gradient(90deg,#1a3a5c,#2e6da4);color:#fff;text-align:center;padding:9px 20px;font-size:13px;font-weight:500;position:fixed;top:3px;left:0;right:0;z-index:300;}
+    .dot{display:inline-block;background:#4CAF50;width:8px;height:8px;border-radius:50%;margin-right:6px;animation:pulse 2s infinite;vertical-align:middle;}
+    @keyframes pulse{0%,100%{opacity:1;transform:scale(1);}50%{opacity:.5;transform:scale(1.4);}}
+    nav{position:fixed;top:37px;left:0;right:0;z-index:200;display:flex;align-items:center;justify-content:space-between;padding:16px 60px;background:var(--nbg);backdrop-filter:blur(16px);border-bottom:1px solid var(--border);transition:padding .3s,box-shadow .3s;}
+    nav.sc{padding:10px 60px;box-shadow:0 2px 20px rgba(0,0,0,.07);}
+    .nlogo{font-family:'DM Serif Display',serif;font-size:20px;color:var(--accent);cursor:pointer;user-select:none;}
+    .nlinks{display:flex;gap:22px;list-style:none;align-items:center;}
+    .nlinks a{text-decoration:none;color:var(--muted);font-size:12px;font-weight:600;letter-spacing:.8px;text-transform:uppercase;transition:color .2s;position:relative;padding-bottom:2px;}
+    .nlinks a::after{content:'';position:absolute;bottom:-2px;left:0;right:0;height:2px;background:var(--accent2);border-radius:1px;transform:scaleX(0);transition:transform .2s;}
+    .nlinks a:hover{color:var(--black);}
+    .nlinks a.act{color:var(--accent2);}
+    .nlinks a.act::after{transform:scaleX(1);}
+    .ncta{background:var(--accent)!important;color:var(--white)!important;padding:8px 18px;border-radius:4px;}
+    .ncta:hover{background:var(--accent2)!important;}
+    .ncta::after{display:none!important;}
+    .dtg{background:none;border:1.5px solid var(--border);border-radius:6px;padding:5px 9px;cursor:pointer;font-size:14px;color:var(--black);font-family:'DM Sans',sans-serif;}
+    .admin-badge{display:none;background:#16a34a;color:#fff;font-size:11px;font-weight:700;padding:4px 10px;border-radius:3px;}
+    .admin-badge.on{display:inline-block;}
+    .logout-btn{display:none;background:none;border:1px solid rgba(231,76,60,.5);color:#e74c3c;font-size:11px;font-weight:700;padding:4px 10px;border-radius:3px;cursor:pointer;font-family:'DM Sans',sans-serif;transition:all .2s;}
+    .logout-btn.on{display:inline-block;}
+    .logout-btn:hover{background:#e74c3c;color:#fff;}
+    .hbg{display:none;flex-direction:column;gap:5px;cursor:pointer;background:none;border:none;padding:4px;}
+    .hbg span{display:block;width:22px;height:2px;background:var(--black);border-radius:2px;transition:all .3s;}
+    .hbg.op span:nth-child(1){transform:translateY(7px) rotate(45deg);}
+    .hbg.op span:nth-child(2){opacity:0;}
+    .hbg.op span:nth-child(3){transform:translateY(-7px) rotate(-45deg);}
+    .nr{display:flex;align-items:center;gap:8px;}
+    .mmenu{display:none;position:fixed;inset:0;background:var(--white);z-index:150;flex-direction:column;align-items:center;justify-content:center;gap:32px;padding-top:60px;}
+    .mmenu.op{display:flex;}
+    .mmenu a{text-decoration:none;font-size:22px;font-family:'DM Serif Display',serif;color:var(--black);}
+    .mmenu a:hover{color:var(--accent2);}
+    .mcta{background:var(--accent);color:#fff!important;padding:14px 32px;border-radius:4px;font-family:'DM Sans',sans-serif;font-size:15px;font-weight:600;}
+    #hero{min-height:100vh;display:flex;align-items:center;padding:160px 60px 80px;max-width:1200px;margin:0 auto;}
+    .hi{display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:center;width:100%;}
+    .htag{display:inline-flex;align-items:center;gap:8px;font-size:12px;font-weight:600;letter-spacing:2px;text-transform:uppercase;color:var(--accent2);border:1px solid var(--accent2);padding:5px 14px;border-radius:2px;margin-bottom:28px;}
+    .hname{font-family:'DM Serif Display',serif;font-size:clamp(44px,5vw,68px);line-height:1.05;color:var(--black);margin-bottom:12px;}
+    .hname em{font-style:italic;color:var(--accent2);}
+    .htitle{font-size:17px;color:var(--muted);margin-bottom:20px;}
+    .hdesc{font-size:15px;color:#444;line-height:1.85;margin-bottom:32px;max-width:480px;}
+    body.dark .hdesc{color:#a0b4c8;}
+    .hbtns{display:flex;gap:14px;flex-wrap:wrap;margin-bottom:28px;}
+    .bp{background:var(--accent);color:var(--white);padding:13px 26px;border-radius:4px;text-decoration:none;font-size:14px;font-weight:600;transition:background .2s,transform .2s;display:inline-block;}
+    .bp:hover{background:var(--accent2);transform:translateY(-2px);}
+    .bo{border:1.5px solid var(--accent);color:var(--accent);padding:13px 26px;border-radius:4px;text-decoration:none;font-size:14px;font-weight:600;transition:all .2s;display:inline-block;}
+    .bo:hover{background:var(--accent);color:var(--white);transform:translateY(-2px);}
+    .photo-wrap{position:relative;display:inline-block;}
+    .hphoto{width:220px;height:260px;border-radius:16px;box-shadow:0 8px 40px rgba(0,0,0,.18);object-fit:cover;object-position:top;display:block;}
+    .photo-change-btn{display:none;position:absolute;bottom:10px;right:10px;background:var(--accent);color:#fff;border:none;border-radius:6px;padding:7px 12px;font-size:12px;font-weight:600;cursor:pointer;font-family:'DM Sans',sans-serif;}
+    .admin-mode .photo-change-btn{display:block;}
+    #photoInput{display:none;}
+    .hsoc{display:flex;gap:10px;margin-top:14px;flex-wrap:wrap;}
+    .sbtn{display:inline-flex;align-items:center;gap:6px;font-size:12px;font-weight:600;color:var(--muted);border:1px solid var(--border);padding:6px 12px;border-radius:4px;text-decoration:none;transition:all .2s;}
+    .sbtn:hover{border-color:var(--accent2);color:var(--accent2);}
+    .hr{display:flex;flex-direction:column;gap:14px;align-items:flex-start;}
+    .sc2{background:var(--card);border:1px solid var(--border);border-radius:8px;padding:20px 24px;display:flex;align-items:center;gap:18px;transition:transform .2s,box-shadow .2s;width:100%;}
+    .sc2:hover{transform:translateX(6px);box-shadow:-4px 0 0 var(--accent2);}
+    .snum{font-family:'DM Serif Display',serif;font-size:38px;color:var(--accent);line-height:1;min-width:65px;}
+    .slbl{font-size:13px;color:var(--muted);line-height:1.5;}
+    .slbl strong{display:block;font-size:15px;color:var(--black);font-weight:600;}
+    section{padding:90px 60px;max-width:1200px;margin:0 auto;}
+    .sl{font-size:11px;font-weight:600;letter-spacing:3px;text-transform:uppercase;color:var(--accent2);margin-bottom:10px;}
+    .st{font-family:'DM Serif Display',serif;font-size:clamp(30px,4vw,44px);color:var(--black);margin-bottom:14px;line-height:1.1;}
+    .sln{width:44px;height:3px;background:var(--accent2);margin-bottom:48px;border-radius:2px;}
+    .shr{display:flex;align-items:flex-start;justify-content:space-between;flex-wrap:wrap;gap:16px;}
+    .ag{display:grid;grid-template-columns:1.2fr 1fr;gap:72px;align-items:start;}
+    .at p{color:#444;font-size:15px;line-height:1.9;margin-bottom:18px;}
+    body.dark .at p{color:#a0b4c8;}
+    .dets{display:flex;flex-direction:column;gap:12px;}
+    .dr{display:flex;align-items:flex-start;gap:14px;padding:14px 16px;background:var(--card);border-radius:6px;border-left:3px solid var(--accent2);}
+    .di{font-size:18px;min-width:26px;}
+    .dinf{font-size:13px;color:var(--muted);}
+    .dinf strong{display:block;font-size:14px;color:var(--black);font-weight:600;margin-bottom:2px;}
+    .cbtn{background:none;border:1px solid var(--border);border-radius:3px;padding:2px 8px;font-size:11px;color:var(--accent2);cursor:pointer;font-family:'DM Sans',sans-serif;margin-left:6px;}
+    .cs{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:40px;border-left:4px solid var(--accent2);}
+    .csl{font-size:11px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--accent2);margin-bottom:8px;}
+    .cs h3{font-family:'DM Serif Display',serif;font-size:22px;color:var(--black);margin-bottom:24px;}
+    .csg{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;}
+    .cst{background:var(--white);border:1px solid var(--border);border-radius:8px;padding:18px;}
+    .csn{font-size:11px;font-weight:700;letter-spacing:1px;color:var(--accent2);text-transform:uppercase;margin-bottom:6px;}
+    .csh{font-size:14px;font-weight:600;color:var(--black);margin-bottom:8px;}
+    .csp{font-size:13px;color:var(--muted);line-height:1.6;}
+    .csr{margin-top:20px;padding:16px 20px;background:var(--accent);border-radius:6px;color:#fff;font-size:14px;line-height:1.7;}
+    .tl{position:relative;padding-left:32px;}
+    .tl::before{content:'';position:absolute;left:8px;top:0;bottom:0;width:2px;background:var(--border);}
+    .tli{position:relative;margin-bottom:36px;}
+    .tld{position:absolute;left:-28px;top:4px;width:14px;height:14px;border-radius:50%;background:var(--accent2);border:3px solid var(--white);box-shadow:0 0 0 2px var(--accent2);}
+    .tldt{font-size:12px;font-weight:600;letter-spacing:1px;text-transform:uppercase;color:var(--accent2);margin-bottom:4px;}
+    .tltl{font-size:17px;font-weight:600;color:var(--black);margin-bottom:4px;}
+    .tlsb{font-size:14px;color:var(--muted);margin-bottom:8px;}
+    .tltx{font-size:14px;color:#555;line-height:1.75;}
+    body.dark .tltx{color:#a0b4c8;}
+    .sw{background:var(--card);padding:90px 0;}
+    .sw .inn{max-width:1200px;margin:0 auto;padding:0 60px;}
+    .skg{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:20px;}
+    .skgp{background:var(--white);border:1px solid var(--border);border-radius:8px;padding:24px;transition:transform .2s,box-shadow .2s;}
+    body.dark .skgp{background:#162032;border-color:#1e2d42;}
+    .skgp:hover{transform:translateY(-4px);box-shadow:0 12px 28px rgba(0,0,0,.07);}
+    .skgt{font-size:12px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--accent2);margin-bottom:16px;padding-bottom:10px;border-bottom:1px solid var(--border);}
+    .stags{display:flex;flex-wrap:wrap;gap:8px;}
+    .stag{font-size:12px;font-weight:500;color:var(--accent);background:var(--al);padding:5px 11px;border-radius:3px;}
+    body.dark .stag{color:#7dd3fc;background:#1e3a5f;}
+    .pw{margin-top:48px;}
+    .ph{font-size:12px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--muted);margin-bottom:24px;}
+    .pg{display:grid;grid-template-columns:1fr 1fr;gap:18px 52px;}
+    .phd{display:flex;justify-content:space-between;margin-bottom:8px;}
+    .pn{font-size:14px;font-weight:600;color:var(--black);}
+    .pp{font-size:12px;font-weight:700;color:var(--accent2);}
+    .pb{height:6px;background:var(--border);border-radius:3px;overflow:hidden;}
+    .pf{height:100%;background:linear-gradient(90deg,var(--accent),var(--accent2));border-radius:3px;width:0%;transition:width 1.2s cubic-bezier(.4,0,.2,1);}
+    .tw{margin-top:48px;}
+    .th{font-size:11px;font-weight:700;letter-spacing:3px;text-transform:uppercase;color:var(--muted);margin-bottom:18px;}
+    .tr{display:flex;flex-wrap:wrap;gap:10px;}
+    .tp{display:flex;align-items:center;gap:8px;background:var(--white);border:1px solid var(--border);border-radius:6px;padding:8px 14px;font-size:13px;font-weight:500;color:var(--black);transition:transform .2s,border-color .2s;}
+    body.dark .tp{background:#162032;border-color:#1e2d42;color:#e0e8f0;}
+    .tp:hover{transform:translateY(-2px);border-color:var(--accent2);}
+    .tp span{font-size:18px;line-height:1;}
+    .pgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:24px;margin-top:8px;}
+    .pc{border:1px solid var(--border);border-radius:10px;overflow:hidden;transition:transform .2s,box-shadow .2s;background:var(--white);position:relative;}
+    .pc:hover{transform:translateY(-5px);box-shadow:0 16px 36px rgba(0,0,0,.09);}
+    .ptop{padding:26px;position:relative;overflow:hidden;min-height:110px;}
+    .ptop::after{content:'';position:absolute;right:-20px;bottom:-20px;width:110px;height:110px;border-radius:50%;background:rgba(255,255,255,.06);}
+    .pnum{font-family:'DM Serif Display',serif;font-size:44px;color:rgba(255,255,255,.14);line-height:1;margin-bottom:6px;}
+    .pname{font-size:17px;font-weight:600;color:#fff;line-height:1.3;position:relative;z-index:1;}
+    .pbdy{padding:22px 26px;}
+    .pdsc{font-size:13px;color:#555;line-height:1.75;margin-bottom:14px;}
+    body.dark .pdsc{color:#a0b4c8;}
+    .ptls{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:16px;}
+    .tbdg{font-size:10px;font-weight:700;letter-spacing:.5px;text-transform:uppercase;color:var(--accent2);background:var(--al);padding:4px 9px;border-radius:2px;}
+    body.dark .tbdg{color:#7dd3fc;background:#1e3a5f;}
+    .plnks{display:flex;gap:10px;flex-wrap:wrap;align-items:center;}
+    .plnk{font-size:13px;font-weight:600;color:var(--accent2);text-decoration:none;display:inline-flex;align-items:center;gap:5px;transition:gap .2s;}
+    .plnk:hover{gap:9px;}
+    .pdl{font-size:12px;font-weight:600;color:#16a34a;text-decoration:none;display:inline-flex;align-items:center;gap:5px;border:1px solid #16a34a;padding:4px 10px;border-radius:4px;transition:all .2s;}
+    .pdl:hover{background:#16a34a;color:#fff;}
+    .pdel{display:none;position:absolute;top:10px;right:10px;background:rgba(255,255,255,.2);border:none;color:#fff;width:28px;height:28px;border-radius:50%;cursor:pointer;font-size:16px;align-items:center;justify-content:center;transition:background .2s;z-index:2;}
+    .pdel:hover{background:rgba(231,76,60,.8);}
+    .admin-mode .pdel{display:flex;}
+    .addbtn{display:none;background:var(--accent);color:#fff;border:none;padding:10px 20px;border-radius:4px;font-family:'DM Sans',sans-serif;font-size:13px;font-weight:600;cursor:pointer;transition:background .2s,transform .2s;white-space:nowrap;}
+    .addbtn:hover{background:var(--accent2);transform:translateY(-1px);}
+    .admin-mode .addbtn{display:inline-block;}
+    .pload{text-align:center;padding:48px;color:var(--muted);font-size:15px;grid-column:1/-1;}
+    .empty{text-align:center;padding:60px 20px;color:var(--muted);font-size:15px;grid-column:1/-1;line-height:2;}
+    .empty span{display:block;font-size:40px;margin-bottom:12px;}
+    .crtg{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:18px;}
+    .crtc{border:1px solid var(--border);border-radius:8px;padding:22px;display:flex;align-items:center;gap:16px;background:var(--white);transition:transform .2s,border-color .2s;}
+    .crtc:hover{transform:translateY(-3px);border-color:var(--accent2);}
+    .crti{width:46px;height:46px;background:var(--al);border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:20px;flex-shrink:0;}
+    .crtn{font-size:14px;font-weight:600;color:var(--black);margin-bottom:3px;}
+    .crtis{font-size:12px;color:var(--muted);}
+    .tsg{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:22px;}
+    .tsc{background:var(--card);border:1px solid var(--border);border-radius:10px;padding:28px;position:relative;transition:transform .2s;}
+    .tsc:hover{transform:translateY(-3px);}
+    .tsc::before{content:'"';font-family:'DM Serif Display',serif;font-size:72px;color:var(--accent2);opacity:.18;position:absolute;top:10px;left:20px;line-height:1;pointer-events:none;}
+    .tsq{font-size:14px;color:#555;line-height:1.8;margin-bottom:20px;padding-top:24px;font-style:italic;}
+    body.dark .tsq{color:#a0b4c8;}
+    .tsa{display:flex;align-items:center;gap:12px;}
+    .tsav{width:40px;height:40px;border-radius:50%;background:var(--accent);display:flex;align-items:center;justify-content:center;color:#fff;font-weight:700;font-size:13px;flex-shrink:0;}
+    .tsn{font-size:14px;font-weight:600;color:var(--black);}
+    .tsr{font-size:12px;color:var(--muted);}
+    .blg{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:22px;}
+    .blc{border:1px solid var(--border);border-radius:10px;overflow:hidden;background:var(--white);transition:transform .2s,box-shadow .2s;}
+    .blc:hover{transform:translateY(-4px);box-shadow:0 12px 28px rgba(0,0,0,.08);}
+    .blt{background:var(--al);padding:28px;font-size:36px;text-align:center;}
+    .blb{padding:20px 22px;}
+    .bltg{font-size:11px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--accent2);margin-bottom:8px;}
+    .blti{font-size:16px;font-weight:600;color:var(--black);margin-bottom:10px;line-height:1.4;}
+    .blex{font-size:13px;color:var(--muted);line-height:1.7;margin-bottom:16px;}
+    .blm{font-size:12px;color:var(--muted);}
+    .cw{background:var(--accent);padding:90px 0;}
+    .cw .inn{max-width:1200px;margin:0 auto;padding:0 60px;}
+    .cg{display:grid;grid-template-columns:1fr 1fr;gap:56px;align-items:start;}
+    .cdsc{font-size:15px;color:rgba(255,255,255,.7);line-height:1.85;margin-bottom:24px;}
+    .abadge{display:inline-flex;align-items:center;gap:8px;background:rgba(76,175,80,.15);border:1px solid rgba(76,175,80,.4);border-radius:20px;padding:6px 14px;font-size:12px;font-weight:600;color:#a5d6a7;margin-bottom:20px;}
+    .citms{display:flex;flex-direction:column;gap:14px;}
+    .citm{display:flex;align-items:center;gap:12px;color:rgba(255,255,255,.85);font-size:14px;}
+    .citm span{font-size:18px;flex-shrink:0;}
+    .citm a{color:rgba(255,255,255,.85);text-decoration:none;}
+    .citm a:hover{color:#fff;text-decoration:underline;}
+    .cf{display:flex;flex-direction:column;gap:12px;}
+    .frow{display:grid;grid-template-columns:1fr 1fr;gap:12px;}
+    .cf input,.cf textarea,.cf select{background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.15);border-radius:6px;padding:13px 16px;color:#fff;font-family:'DM Sans',sans-serif;font-size:14px;outline:none;transition:border-color .2s;width:100%;}
+    .cf input::placeholder,.cf textarea::placeholder{color:rgba(255,255,255,.35);}
+    .cf input:focus,.cf textarea:focus,.cf select:focus{border-color:rgba(255,255,255,.5);}
+    .cf textarea{height:110px;resize:none;}
+    .cf select option{background:#1a3a5c;}
+    .bw{background:#fff;color:var(--accent);border:none;padding:13px 28px;border-radius:4px;font-family:'DM Sans',sans-serif;font-size:14px;font-weight:600;cursor:pointer;transition:background .2s,transform .2s;align-self:flex-start;}
+    .bw:hover{background:#e8f0f8;transform:translateY(-1px);}
+    footer{background:#06101e;color:rgba(255,255,255,.35);padding:32px 60px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:16px;font-size:13px;}
+    footer a{color:rgba(255,255,255,.5);text-decoration:none;}
+    footer a:hover{color:#fff;}
+    .flinks{display:flex;gap:24px;}
+    .btt{background:var(--accent);color:#fff;border:none;padding:8px 16px;border-radius:4px;font-size:12px;font-weight:600;cursor:pointer;text-decoration:none;transition:background .2s;}
+    .btt:hover{background:var(--accent2);}
+    .mov{position:fixed;inset:0;background:rgba(0,0,0,.6);z-index:1000;display:flex;align-items:center;justify-content:center;padding:20px;opacity:0;pointer-events:none;transition:opacity .2s;}
+    .mov.op{opacity:1;pointer-events:all;}
+    .mod{background:var(--white);border-radius:12px;padding:36px;width:100%;max-width:520px;max-height:90vh;overflow-y:auto;box-shadow:0 24px 64px rgba(0,0,0,.2);transform:translateY(20px);transition:transform .25s;}
+    .mov.op .mod{transform:translateY(0);}
+    .mod h3{font-family:'DM Serif Display',serif;font-size:22px;color:var(--black);margin-bottom:6px;}
+    .mod .msub{background:none;border:none;padding:0;font-size:20px;position:absolute;top:16px;right:20px;cursor:pointer;color:var(--muted);}
+    .mod p.hint{font-size:13px;color:var(--muted);margin-bottom:20px;}
+    .mod label{display:block;font-size:11px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--muted);margin-bottom:6px;margin-top:14px;}
+    .mod label:first-of-type{margin-top:0;}
+    .mod input,.mod textarea{width:100%;background:var(--card);border:1px solid var(--border);border-radius:6px;padding:11px 14px;font-family:'DM Sans',sans-serif;font-size:14px;color:var(--black);outline:none;transition:border-color .2s;}
+    .mod input:focus,.mod textarea:focus{border-color:var(--accent2);}
+    .mod textarea{height:80px;resize:none;}
+    .mbtns{display:flex;gap:12px;margin-top:22px;}
+    .mbtn{padding:11px 24px;border-radius:4px;font-family:'DM Sans',sans-serif;font-size:14px;font-weight:600;cursor:pointer;border:none;transition:background .2s;}
+    .mbtn-p{background:var(--accent);color:#fff;}
+    .mbtn-p:hover{background:var(--accent2);}
+    .mbtn-s{background:none;border:1.5px solid var(--border)!important;color:var(--muted);}
+    .mbtn-s:hover{border-color:var(--accent)!important;color:var(--accent);}
+    .crow{display:flex;align-items:center;gap:12px;}
+    .crow input[type="color"]{width:48px;height:38px;border-radius:6px;border:1px solid var(--border);padding:2px;cursor:pointer;}
+    .fhint{font-size:11px;color:var(--muted);margin-top:4px;font-style:italic;}
+
+    /* ── FILE UPLOAD ZONE ── */
+    .fupzone{border:2px dashed var(--border);border-radius:8px;padding:22px 16px;text-align:center;cursor:pointer;transition:border-color .2s,background .2s;position:relative;margin-top:4px;background:var(--card);}
+    .fupzone:hover,.fupzone.drag{border-color:var(--accent2);background:var(--al);}
+    .fupzone input[type="file"]{position:absolute;inset:0;opacity:0;cursor:pointer;width:100%;height:100%;}
+    .fup-icon{font-size:26px;margin-bottom:6px;pointer-events:none;}
+    .fup-txt{font-size:13px;color:var(--muted);line-height:1.5;pointer-events:none;}
+    .fup-txt strong{display:block;color:var(--accent2);font-size:13px;margin-bottom:2px;}
+    .fup-name{margin-top:8px;font-size:12px;font-weight:600;color:#16a34a;display:none;}
+    .fup-prog{margin-top:10px;height:5px;background:var(--border);border-radius:3px;overflow:hidden;display:none;}
+    .fup-prog-bar{height:100%;width:0%;background:linear-gradient(90deg,var(--accent),var(--accent2));border-radius:3px;transition:width .4s ease;}
+
+    .fu{opacity:0;transform:translateY(22px);transition:opacity .6s ease,transform .6s ease;}
+    .fu.vis{opacity:1;transform:translateY(0);}
+    @media(max-width:900px){
+      nav{padding:14px 20px;top:37px;}nav.sc{padding:10px 20px;}
+      .nlinks{display:none;}.hbg{display:flex;}
+      #hero,section{padding:120px 20px 60px;}
+      .hi,.ag,.cg{grid-template-columns:1fr;gap:36px;}
+      .sw .inn,.cw .inn{padding:0 20px;}
+      .frow{grid-template-columns:1fr;}
+      .csg{grid-template-columns:1fr 1fr;}
+      .pg{grid-template-columns:1fr;}
+      footer{padding:24px 20px;flex-direction:column;text-align:center;}
+      .flinks{justify-content:center;}
+    }
+    @media(max-width:600px){
+      .csg{grid-template-columns:1fr;}
+      .pgrid{grid-template-columns:1fr;}
+      .mod{padding:24px;}
+    }
+  </style>
+</head>
+<body>
+<div id="prog"></div>
+<div class="toast" id="toast"></div>
+<input type="file" id="photoInput" accept="image/*" onchange="changePhoto(this)"/>
+
+<div class="banner"><span class="dot"></span>Open to Work — Available for Data Analyst &amp; Business Analyst roles · Remote, Hybrid or On-site</div>
+
+<nav id="nav">
+  <span class="nlogo" id="nlogo" onclick="logoClick()">Omotolani A.</span>
+  <ul class="nlinks">
+    <li><a href="#about" data-s="about">About</a></li>
+    <li><a href="#experience" data-s="experience">Experience</a></li>
+    <li><a href="#skills" data-s="skills">Skills</a></li>
+    <li><a href="#projects" data-s="projects">Projects</a></li>
+    <li><a href="#blog" data-s="blog">Insights</a></li>
+    <li><a href="#contact" data-s="contact">Contact</a></li>
+    <li><span class="admin-badge" id="adminBadge">🔐 Admin</span></li>
+    <li><button class="logout-btn" id="logoutBtn" onclick="doLogout()">Logout</button></li>
+    <li><button class="dtg" onclick="toggleDark()" id="dt">🌙</button></li>
+    <li><a href="Ajibade_Omotolani_CV.docx" download class="ncta">Download CV</a></li>
+  </ul>
+  <div class="nr">
+    <button class="dtg" onclick="toggleDark()" id="mdt" style="display:none">🌙</button>
+    <button class="hbg" id="hbg" onclick="toggleMenu()"><span></span><span></span><span></span></button>
+  </div>
+</nav>
+
+<div class="mmenu" id="mmenu">
+  <a href="#about" onclick="closeMenu()">About</a>
+  <a href="#experience" onclick="closeMenu()">Experience</a>
+  <a href="#skills" onclick="closeMenu()">Skills</a>
+  <a href="#projects" onclick="closeMenu()">Projects</a>
+  <a href="#blog" onclick="closeMenu()">Insights</a>
+  <a href="#contact" onclick="closeMenu()">Contact</a>
+  <a href="Ajibade_Omotolani_CV.docx" download class="mcta" onclick="closeMenu()">Download CV</a>
+</div>
+
+<div id="hero">
+  <div class="hi">
+    <div class="fu">
+      <div class="htag"><span class="dot"></span>Open to Work</div>
+      <h1 class="hname">Omotolani<br/><em>Ajibade</em></h1>
+      <p class="htitle">Data Analyst &nbsp;·&nbsp; Business Analyst &nbsp;·&nbsp; Lagos, Nigeria</p>
+      <p class="hdesc">I turn raw, messy data into clear stories that drive real business decisions. From writing complex SQL queries to building interactive Power BI dashboards — I help organisations see what the data is actually saying.</p>
+      <div class="hbtns">
+        <a href="#projects" class="bp">View My Work</a>
+        <a href="#contact" class="bo">Hire Me</a>
+        <a href="Ajibade_Omotolani_CV.docx" download class="bo">Download CV ↓</a>
+      </div>
+      <div class="hsoc">
+        <a href="https://www.linkedin.com/in/omotola-ajibade-70552135a" target="_blank" class="sbtn">💼 LinkedIn</a>
+        <a href="https://github.com/Tola-11" target="_blank" class="sbtn">🐙 GitHub</a>
+        <a href="mailto:omotolaniayinke863@gmail.com" class="sbtn">📧 Email</a>
+      </div>
+    </div>
+    <div class="hr fu" style="transition-delay:.15s">
+      <div class="photo-wrap">
+        <img src="profile.jpg" alt="Omotolani Ajibade" class="hphoto" id="profileImg" onerror="this.style.opacity='.2'"/>
+        <button class="photo-change-btn" onclick="document.getElementById('photoInput').click()">📷 Change Photo</button>
+      </div>
+      <div class="sc2"><div class="snum">1+</div><div class="slbl"><strong>Year of Experience</strong>Data Analyst at Othello Institute of Technology</div></div>
+      <div class="sc2"><div class="snum">11+</div><div class="slbl"><strong>Projects Completed</strong>From Excel automation to Power BI dashboards</div></div>
+      <div class="sc2"><div class="snum">3</div><div class="slbl"><strong>Certifications</strong>Google · Microsoft · SQL</div></div>
+    </div>
+  </div>
+</div>
+
+<section id="about">
+  <div class="sl fu">Who I Am</div>
+  <h2 class="st fu">About Me</h2>
+  <div class="sln fu"></div>
+  <div class="ag">
+    <div class="at fu">
+      <p>I'm a Data Analyst based in Lagos, Nigeria, with hands-on professional experience turning complex, messy data into clear stories that drive real business decisions.</p>
+      <p>My work spans the full analytics lifecycle — collecting and cleaning raw datasets, writing optimised SQL queries, building DAX-powered Power BI dashboards, and presenting findings to stakeholders in a way that's easy to understand and act on.</p>
+      <p>I've worked across customer retention analysis, sales performance tracking, market research, HR data management, and automated reporting — always focused on delivering insights that actually matter to the business.</p>
+      <p>I'm detail-oriented, collaborative, and passionate about using data as a tool for better decision-making. Currently open to full-time, contract, and remote roles.</p>
+    </div>
+    <div class="dets fu" style="transition-delay:.1s">
+      <div class="dr"><div class="di">🏢</div><div class="dinf"><strong>Othello Institute of Technology</strong>Data Analyst · March 2025 – February 2026</div></div>
+      <div class="dr"><div class="di">🎓</div><div class="dinf"><strong>BSc Entrepreneurship</strong>Kwara State University · Nov 2024</div></div>
+      <div class="dr"><div class="di">📍</div><div class="dinf"><strong>Lagos, Nigeria</strong>Open to remote &amp; hybrid roles</div></div>
+      <div class="dr"><div class="di">📧</div><div class="dinf"><strong>omotolaniayinke863@gmail.com</strong><button class="cbtn" onclick="copyEmail()">Copy</button></div></div>
+      <div class="dr"><div class="di">🌐</div><div class="dinf"><strong>Languages</strong>English (Fluent) · Yoruba (Fluent)</div></div>
+    </div>
+  </div>
+</section>
+
+<section style="padding-top:0">
+  <div class="cs fu">
+    <div class="csl">Featured Case Study</div>
+    <h3>How I Identified 3 Key Churn Drivers to Improve Customer Retention</h3>
+    <div class="csg">
+      <div class="cst"><div class="csn">Step 01</div><div class="csh">Problem</div><div class="csp">Business was losing customers with no clear understanding of why. Needed to identify patterns in churned vs. retained customers.</div></div>
+      <div class="cst"><div class="csn">Step 02</div><div class="csh">Approach</div><div class="csp">Cleaned and queried customer data using SQL. Segmented customers by behaviour, demographics, and transaction history.</div></div>
+      <div class="cst"><div class="csn">Step 03</div><div class="csh">Analysis</div><div class="csp">Built a Power BI dashboard with DAX measures tracking churn rate, customer lifetime value, and segment-level KPIs.</div></div>
+      <div class="cst"><div class="csn">Step 04</div><div class="csh">Result</div><div class="csp">Pinpointed 3 root causes of churn. Delivered recommendations adopted by the retention team for strategic action.</div></div>
+    </div>
+    <div class="csr">🎯 <strong>Outcome:</strong> 3 key churn drivers identified · Interactive dashboard delivered · Actionable retention strategy recommended</div>
+  </div>
+</section>
+
+<section id="experience">
+  <div class="sl fu">My Journey</div>
+  <h2 class="st fu">Experience &amp; Education</h2>
+  <div class="sln fu"></div>
+  <div class="tl fu">
+    <div class="tli"><div class="tld"></div><div class="tldt">March 2025 – February 2026</div><div class="tltl">Data Analyst</div><div class="tlsb">Othello Institute of Technology · Lagos, Nigeria</div><div class="tltx">Built interactive Power BI dashboards using DAX. Wrote and optimised complex SQL queries. Developed and maintained structured databases. Cleaned and transformed large datasets. Collaborated with stakeholders to deliver clear, visual data stories supporting strategic decisions.</div></div>
+    <div class="tli"><div class="tld"></div><div class="tldt">Graduated November 2024</div><div class="tltl">BSc Entrepreneurship</div><div class="tlsb">Kwara State University · Nigeria</div><div class="tltx">Studied business strategy, market analysis, and entrepreneurial thinking — skills that directly inform how I approach data problems with a business-first mindset.</div></div>
+    <div class="tli"><div class="tld"></div><div class="tldt">2024 – 2025</div><div class="tltl">Professional Certifications</div><div class="tlsb">Google · Microsoft · SQL</div><div class="tltx">Completed Google Data Analytics Professional Certificate, Microsoft Excel &amp; Power BI Fundamentals, and SQL for Data Analysis.</div></div>
+  </div>
+</section>
+
+<div class="sw" id="skills">
+  <div class="inn">
+    <div class="sl fu">What I Use</div>
+    <h2 class="st fu">Technical Skills</h2>
+    <div class="sln fu"></div>
+    <div class="skg">
+      <div class="skgp fu"><div class="skgt">Data Analysis &amp; Querying</div><div class="stags"><span class="stag">SQL</span><span class="stag">MySQL</span><span class="stag">Excel</span><span class="stag">Google Sheets</span></div></div>
+      <div class="skgp fu" style="transition-delay:.05s"><div class="skgt">Data Visualization</div><div class="stags"><span class="stag">Power BI</span><span class="stag">DAX</span><span class="stag">Tableau</span><span class="stag">Excel Charts</span></div></div>
+      <div class="skgp fu" style="transition-delay:.1s"><div class="skgt">Spreadsheets &amp; Reporting</div><div class="stags"><span class="stag">Power Query</span><span class="stag">Pivot Tables</span><span class="stag">Excel Automation</span><span class="stag">VLOOKUP</span></div></div>
+      <div class="skgp fu" style="transition-delay:.15s"><div class="skgt">Excel Functions</div><div class="stags"><span class="stag">IF / SUMIF</span><span class="stag">SUMIFS</span><span class="stag">AVERAGEIFS</span><span class="stag">COUNTIFS</span><span class="stag">LEFT / RIGHT / MID</span><span class="stag">TRIM / PROPER</span></div></div>
+      <div class="skgp fu" style="transition-delay:.2s"><div class="skgt">Programming</div><div class="stags"><span class="stag">Python (Pandas)</span><span class="stag">HTML</span><span class="stag">CSS</span></div></div>
+      <div class="skgp fu" style="transition-delay:.25s"><div class="skgt">Core Competencies</div><div class="stags"><span class="stag">Data Cleaning</span><span class="stag">KPI Tracking</span><span class="stag">Dashboard Design</span><span class="stag">Data Storytelling</span><span class="stag">Database Design</span></div></div>
+    </div>
+    <div class="pw fu" style="transition-delay:.1s" id="profwrap">
+      <div class="ph">Proficiency Levels</div>
+      <div class="pg" id="profgrid"></div>
+    </div>
+    <div class="tw fu" style="transition-delay:.15s">
+      <div class="th">Tools &amp; Software</div>
+      <div class="tr">
+        <div class="tp"><span>📊</span>Power BI</div>
+        <div class="tp"><span>🗄️</span>SQL / MySQL</div>
+        <div class="tp"><span>📗</span>Microsoft Excel</div>
+        <div class="tp"><span>📈</span>Tableau</div>
+        <div class="tp"><span>🔷</span>DAX</div>
+        <div class="tp"><span>🔄</span>Power Query</div>
+        <div class="tp"><span>📋</span>Google Sheets</div>
+        <div class="tp"><span>🐍</span>Python (Pandas)</div>
+        <div class="tp"><span>🏢</span>Microsoft Office</div>
+        <div class="tp"><span>🌐</span>HTML / CSS</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<section id="projects">
+  <div class="shr">
+    <div>
+      <div class="sl fu">My Work</div>
+      <h2 class="st fu">Projects</h2>
+      <div class="sln fu"></div>
+    </div>
+    <button class="addbtn fu" onclick="openMod('pm')" style="margin-top:14px">＋ Add Project</button>
+  </div>
+  <div class="pgrid" id="pgrid">
+    <div class="pload">⏳ Loading projects...</div>
+  </div>
+</section>
+
+<div style="background:var(--card);padding:90px 0" id="certifications">
+  <div style="max-width:1200px;margin:0 auto;padding:0 60px">
+    <div class="sl fu">Credentials</div>
+    <h2 class="st fu">Certifications</h2>
+    <div class="sln fu"></div>
+    <div class="crtg">
+      <div class="crtc fu"><div class="crti">🎓</div><div><div class="crtn">Google Data Analytics Professional Certificate</div><div class="crtis">Google · Coursera</div></div></div>
+      <div class="crtc fu" style="transition-delay:.05s"><div class="crti">📊</div><div><div class="crtn">Microsoft Excel &amp; Power BI Fundamentals</div><div class="crtis">Microsoft</div></div></div>
+      <div class="crtc fu" style="transition-delay:.1s"><div class="crti">🗄️</div><div><div class="crtn">SQL for Data Analysis</div><div class="crtis">Verified Certification</div></div></div>
+    </div>
+  </div>
+</div>
+
+<section id="testimonials">
+  <div class="sl fu">What Others Say</div>
+  <h2 class="st fu">Testimonials</h2>
+  <div class="sln fu"></div>
+  <div class="tsg">
+    <div class="tsc fu"><p class="tsq">Omotolani consistently delivered clean, well-structured dashboards that made it easy for our team to understand performance at a glance. Her attention to detail and ability to translate data into business language is impressive.</p><div class="tsa"><div class="tsav">OI</div><div><div class="tsn">Supervisor</div><div class="tsr">Othello Institute of Technology</div></div></div></div>
+    <div class="tsc fu" style="transition-delay:.1s"><p class="tsq">Her work on our data cleaning and reporting processes saved the team significant time every week. She approaches every dataset with structure and a clear focus on what the business actually needs.</p><div class="tsa"><div class="tsav">TL</div><div><div class="tsn">Team Lead</div><div class="tsr">Othello Institute of Technology</div></div></div></div>
+    <div class="tsc fu" style="transition-delay:.2s"><p class="tsq">What stands out about Omotolani is her ability to ask the right questions before diving into the data. She doesn't just produce numbers — she tells you what they mean and what to do next.</p><div class="tsa"><div class="tsav">CA</div><div><div class="tsn">Colleague</div><div class="tsr">Data Analytics Cohort</div></div></div></div>
+  </div>
+</section>
+
+<div style="background:var(--card);padding:90px 0" id="blog">
+  <div style="max-width:1200px;margin:0 auto;padding:0 60px">
+    <div class="sl fu">Thoughts &amp; Insights</div>
+    <h2 class="st fu">Data Insights Blog</h2>
+    <div class="sln fu"></div>
+    <div class="blg">
+      <div class="blc fu"><div class="blt">📊</div><div class="blb"><div class="bltg">Excel · Analysis</div><div class="blti">5 Things I Learned From Analysing Coca-Cola Sales Data</div><div class="blex">Sales data tells more than just numbers — it reveals seasonality, regional gaps, and hidden opportunities.</div><div class="blm">Coming soon · Data Analysis</div></div></div>
+      <div class="blc fu" style="transition-delay:.1s"><div class="blt">🔍</div><div class="blb"><div class="bltg">Power BI</div><div class="blti">How to Build a Churn Dashboard That Actually Drives Action</div><div class="blex">Most churn dashboards show what happened. The best ones show what to do next.</div><div class="blm">Coming soon · Power BI &amp; DAX</div></div></div>
+      <div class="blc fu" style="transition-delay:.2s"><div class="blt">🧹</div><div class="blb"><div class="bltg">Data Cleaning</div><div class="blti">Why Data Cleaning is 80% of the Job — And How to Do It Fast</div><div class="blex">Before any analysis, the data must be trustworthy. Here's my step-by-step Excel cleaning process.</div><div class="blm">Coming soon · Excel Tips</div></div></div>
+    </div>
+  </div>
+</div>
+
+<div class="cw" id="contact">
+  <div class="inn">
+    <div class="sl fu" style="color:rgba(255,255,255,.5)">Get In Touch</div>
+    <h2 class="st fu" style="color:#fff">Let's Work Together</h2>
+    <div class="sln fu" style="background:rgba(255,255,255,.3)"></div>
+    <div class="cg">
+      <div class="fu">
+        <div class="abadge"><span class="dot" style="margin:0"></span>&nbsp;Actively looking — available immediately</div>
+        <p class="cdsc">I'm open to Data Analyst and Business Analyst roles — full-time, contract, or remote. Whether you have a project, an opportunity, or just want to connect, reach out!</p>
+        <div class="citms">
+          <div class="citm"><span>📧</span><a href="mailto:omotolaniayinke863@gmail.com">omotolaniayinke863@gmail.com</a></div>
+          <div class="citm"><span>📱</span>0813 119 7468 · 0905 573 1088</div>
+          <div class="citm"><span>📍</span>Lagos, Nigeria — Open to Remote</div>
+          <div class="citm"><span>💼</span><a href="https://www.linkedin.com/in/omotola-ajibade-70552135a" target="_blank">LinkedIn Profile</a></div>
+          <div class="citm"><span>🐙</span><a href="https://github.com/Tola-11" target="_blank">GitHub — Tola-11</a></div>
+          <div class="citm"><span>📄</span><a href="Ajibade_Omotolani_CV.docx" download>Download My CV</a></div>
+        </div>
+      </div>
+      <div class="fu" style="transition-delay:.1s">
+        <form class="cf" action="https://formspree.io/f/YOUR_FORM_ID" method="POST" onsubmit="handleSub(event)">
+          <div class="frow">
+            <input type="text" name="name" placeholder="Your Name" required/>
+            <input type="email" name="email" placeholder="Your Email" required/>
+          </div>
+          <select name="opportunity">
+            <option value="" disabled selected>Type of Opportunity</option>
+            <option>Full-time Role</option>
+            <option>Contract / Freelance</option>
+            <option>Remote Role</option>
+            <option>Collaboration</option>
+            <option>Just saying hello</option>
+          </select>
+          <input type="text" name="subject" placeholder="Subject"/>
+          <textarea name="message" placeholder="Your message..."></textarea>
+          <button type="submit" class="bw" id="subbtn">Send Message →</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<footer>
+  <div>© 2026 Omotolani Ajibade · Data Analyst · Lagos, Nigeria</div>
+  <div class="flinks">
+    <a href="https://github.com/Tola-11" target="_blank">GitHub</a>
+    <a href="https://www.linkedin.com/in/omotola-ajibade-70552135a" target="_blank">LinkedIn</a>
+    <a href="mailto:omotolaniayinke863@gmail.com">Email</a>
+  </div>
+  <div style="display:flex;gap:10px;align-items:center">
+    <button style="background:none;border:1px solid rgba(255,255,255,.2);color:rgba(255,255,255,.5);padding:7px 14px;border-radius:4px;font-size:12px;cursor:pointer;font-family:'DM Sans',sans-serif;" onclick="window.print()">🖨 Print / Save PDF</button>
+    <a href="#hero" class="btt">↑ Top</a>
+  </div>
+</footer>
+
+<!-- ADD PROJECT MODAL -->
+<div class="mov" id="pm" onclick="bgClose(event,'pm')">
+  <div class="mod" style="position:relative">
+    <button class="msub" onclick="closeMod('pm')">✕</button>
+    <h3>Add New Project</h3>
+    <p class="hint">Fill in the details — upload a file and visitors get a real download link instantly from Supabase Storage.</p>
+
+    <label>Project Title *</label>
+    <input type="text" id="pt" placeholder="e.g. Customer Churn Analysis"/>
+
+    <label>Description *</label>
+    <textarea id="pd" placeholder="What did you do and what was the outcome?"></textarea>
+
+    <label>Tools Used (comma-separated)</label>
+    <input type="text" id="ptools" placeholder="e.g. SQL, Power BI, DAX"/>
+
+    <label>GitHub Link</label>
+    <input type="url" id="pglink" placeholder="https://github.com/Tola-11/..."/>
+
+    <label>Project File (optional)</label>
+    <div class="fupzone" id="fupzone">
+      <input type="file" id="pfile" accept=".xlsx,.xls,.pbix,.pdf,.csv,.zip,.docx,.pptx" onchange="fileChosen(this)"/>
+      <div class="fup-icon">📂</div>
+      <div class="fup-txt">
+        <strong>Click to choose a file</strong>
+        or drag and drop here
+      </div>
+      <div class="fup-name" id="fupname"></div>
+    </div>
+    <div class="fup-prog" id="fupprog"><div class="fup-prog-bar" id="fupprogbar"></div></div>
+    <p class="fhint" id="fupstatus">Supported: .xlsx, .pbix, .pdf, .csv, .zip · Max 50 MB · Stored in Supabase Storage</p>
+
+    <label>Header Color</label>
+    <div class="crow">
+      <input type="color" id="pcolor" value="#1a3a5c"/>
+      <span style="font-size:13px;color:var(--muted)">Card header background</span>
+    </div>
+
+    <div class="mbtns">
+      <button class="mbtn mbtn-p" id="addBtn" onclick="addProject()">Add Project</button>
+      <button class="mbtn mbtn-s" onclick="closeMod('pm')">Cancel</button>
+    </div>
+  </div>
+</div>
+
+<!-- ADMIN LOGIN MODAL -->
+<div class="mov" id="alm" onclick="bgClose(event,'alm')">
+  <div class="mod" style="max-width:400px;position:relative">
+    <button class="msub" onclick="closeMod('alm')">✕</button>
+    <h3>🔐 Admin Login</h3>
+    <p class="hint">Sign in with your Supabase account to manage projects.</p>
+    <label>Email</label>
+    <input type="email" id="aemail" value="omotolaniayinke863@gmail.com" placeholder="your@email.com"/>
+    <label>Password</label>
+    <input type="password" id="apw" placeholder="Your Supabase password" onkeydown="if(event.key==='Enter')doLogin()"/>
+    <div id="loginerr" style="color:#e74c3c;font-size:13px;margin-top:8px;display:none"></div>
+    <div class="mbtns">
+      <button class="mbtn mbtn-p" id="loginBtn" onclick="doLogin()">Login</button>
+      <button class="mbtn mbtn-s" onclick="closeMod('alm')">Cancel</button>
+    </div>
+  </div>
+</div>
+
+<script>
+// ── SUPABASE ──────────────────────────────────────────────────
+const { createClient } = supabase;
+const sb = createClient(
+  'https://dznbsrlgxrymmjhugtrs.supabase.co',
+  'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImR6bmJzcmxneHJ5bW1qaHVndHJzIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzQ5NTgzODYsImV4cCI6MjA5MDUzNDM4Nn0.OBykh6KPUfp2hEBU93ESZ8HXh-RLlZN7ock2PnDOEh0'
+);
+const BUCKET = 'project-files';
+let isAdmin = false, logoClicks = 0, logoTimer = null, chosenFile = null;
+
+// ── DEFAULTS ──────────────────────────────────────────────────
+const DEFAULTS = [
+  {title:'Customer Retention (Churn) Analysis',description:'End-to-end churn analysis identifying 3 key retention drivers. Built an interactive Power BI dashboard tracking churn rate, customer segments, and KPIs to support strategic decisions.',tools:'SQL, Power BI, DAX',github_link:'https://github.com/Tola-11/customer-churn-analysis',file_url:'',color:'#1a3a5c'},
+  {title:'Sales & Marketing Data Analysis',description:'Cleaned and transformed multi-source sales datasets. Developed regional performance dashboards in Power BI, delivering insights for sales planning and resource allocation.',tools:'Excel, SQL, Power BI',github_link:'https://github.com/Tola-11/sales-marketing-analysis',file_url:'',color:'#1a4a6e'},
+  {title:'Excel Reporting Automation',description:'Automated weekly management reporting using Power Query and Pivot Tables, reducing manual effort by ~75%. Produced executive-ready dashboards for faster decision-making.',tools:'Excel, Power Query, Pivot Tables',github_link:'https://github.com/Tola-11/excel-reporting-automation',file_url:'',color:'#14455c'},
+  {title:'Market Research Analysis',description:'Analysed customer demographics and emerging market trends. Presented findings through visual summaries to guide business strategy and stakeholder decisions.',tools:'Google Sheets, Data Visualisation',github_link:'https://github.com/Tola-11/market-research-analysis',file_url:'',color:'#1f3a5c'},
+  {title:'Restaurant Orders Analysis',description:'Uncovered most/least ordered items, peak order times, highest-spending orders, and menu expansion opportunities from a real-world restaurant dataset.',tools:'Power BI, SQL, Excel',github_link:'https://github.com/Tola-11/restaurant-orders-analysis',file_url:'',color:'#243b55'},
+  {title:'Coca-Cola Sales Analysis & Dashboard',description:'Analysed Coca-Cola sales data to identify the top profitable region. Built a Pivot Table analysis and interactive Excel dashboard for KPI tracking.',tools:'Excel, Pivot Tables, Dashboard',github_link:'https://github.com/Tola-11/DATA_ANALYST_PORTFOLIO',file_url:'',color:'#1a4a3a'},
+  {title:'HP Nigeria Sales Dashboard',description:'Built a full Excel data visualization dashboard using HP Nigeria sales data to track sales performance, trends, and KPIs across regions.',tools:'Excel, Data Visualization, Dashboard',github_link:'https://github.com/Tola-11/DATA_ANALYST_PORTFOLIO',file_url:'',color:'#3a1a4a'},
+  {title:'VLOOKUP & HR Salary Checker',description:'Built an HR salary checker tool using VLOOKUP to automate employee salary lookups across a masterlist — a real-world HR data management solution.',tools:'Excel, VLOOKUP, HR Data',github_link:'https://github.com/Tola-11/DATA_ANALYST_PORTFOLIO',file_url:'',color:'#4a3a1a'},
+  {title:'Data Cleaning & Text Transformation',description:'Cleaned and standardised messy datasets using TRIM, PROPER, UPPER, LOWER and email formatting across full name and student registration data.',tools:'Excel, Data Cleaning, Text Functions',github_link:'https://github.com/Tola-11/DATA_ANALYST_PORTFOLIO',file_url:'',color:'#1a3a4a'},
+  {title:'Employee Data — Sort, Filter & Conditional Analysis',description:'Applied SUMIFS, AVERAGEIFS, and COUNTIFS to an employee dataset to analyse compensation, ratings, and benefits across departments.',tools:'Excel, SUMIFS, Sort & Filter',github_link:'https://github.com/Tola-11/DATA_ANALYST_PORTFOLIO',file_url:'',color:'#2a4a1a'},
+  {title:'Excel Functions Mastery — IF, SUMIF, Pivot & Dashboard',description:'Comprehensive project covering IF logic, DSUM, database functions, multi-level sorting, subtotals, and Pivot Table dashboards on satisfaction datasets.',tools:'Excel, IF/SUMIF, Pivot Tables, Dashboard',github_link:'https://github.com/Tola-11/DATA_ANALYST_PORTFOLIO',file_url:'',color:'#4a1a2a'}
+];
+
+const esc = s => String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+
+// ── AUTH ──────────────────────────────────────────────────────
+async function checkSession() {
+  const { data:{ session } } = await sb.auth.getSession();
+  if (session) setAdminMode(true);
+}
+async function doLogin() {
+  const email = document.getElementById('aemail').value.trim();
+  const pw = document.getElementById('apw').value;
+  const btn = document.getElementById('loginBtn');
+  const err = document.getElementById('loginerr');
+  err.style.display = 'none';
+  btn.textContent = 'Logging in…'; btn.disabled = true;
+  const { error } = await sb.auth.signInWithPassword({ email, password: pw });
+  if (error) {
+    err.textContent = '⚠ ' + error.message; err.style.display = 'block';
+    btn.textContent = 'Login'; btn.disabled = false;
+  } else {
+    setAdminMode(true); closeMod('alm');
+    document.getElementById('apw').value = '';
+    toast('✓ Logged in! You can now add and delete projects.');
+  }
+}
+async function doLogout() { await sb.auth.signOut(); setAdminMode(false); toast('Logged out.'); }
+function setAdminMode(on) {
+  isAdmin = on;
+  document.body.classList.toggle('admin-mode', on);
+  document.getElementById('adminBadge').classList.toggle('on', on);
+  document.getElementById('logoutBtn').classList.toggle('on', on);
+}
+function logoClick() {
+  logoClicks++;
+  clearTimeout(logoTimer);
+  if (logoClicks >= 5) {
+    logoClicks = 0;
+    if (isAdmin) { toast('Already logged in as admin!'); return; }
+    openMod('alm');
+    setTimeout(() => document.getElementById('apw').focus(), 200);
+    return;
+  }
+  logoTimer = setTimeout(() => logoClicks = 0, 2000);
+}
+
+// ── FILE PICKER ───────────────────────────────────────────────
+function fileChosen(input) {
+  const file = input.files[0];
+  if (!file) { chosenFile = null; return; }
+  if (file.size > 50 * 1024 * 1024) {
+    toast('⚠ File too large — max 50 MB');
+    input.value = ''; chosenFile = null; return;
+  }
+  chosenFile = file;
+  const mb = (file.size / 1024 / 1024).toFixed(2);
+  const nameEl = document.getElementById('fupname');
+  nameEl.textContent = '📎 ' + file.name + ' (' + mb + ' MB)';
+  nameEl.style.display = 'block';
+  document.getElementById('fupstatus').textContent = 'File ready — will upload when you click Add Project.';
+}
+
+// Drag highlight
+const fz = document.getElementById('fupzone');
+fz.addEventListener('dragover', e => { e.preventDefault(); fz.classList.add('drag'); });
+fz.addEventListener('dragleave', () => fz.classList.remove('drag'));
+fz.addEventListener('drop', () => fz.classList.remove('drag'));
+
+// ── UPLOAD TO STORAGE ─────────────────────────────────────────
+async function uploadFile(file) {
+  const safeName = file.name.replace(/[^a-zA-Z0-9._-]/g, '_');
+  const path = Date.now() + '_' + safeName;
+  const prog = document.getElementById('fupprog');
+  const bar  = document.getElementById('fupprogbar');
+  prog.style.display = 'block'; bar.style.width = '15%';
+
+  const { error } = await sb.storage.from(BUCKET).upload(path, file, {
+    cacheControl: '3600',
+    upsert: false,
+    contentType: file.type || 'application/octet-stream'
+  });
+
+  if (error) { prog.style.display = 'none'; throw new Error('Upload failed: ' + error.message); }
+
+  bar.style.width = '100%';
+  setTimeout(() => { prog.style.display = 'none'; bar.style.width = '0%'; }, 700);
+
+  const { data: urlData } = sb.storage.from(BUCKET).getPublicUrl(path);
+  return urlData.publicUrl;
+}
+
+// ── RENDER PROJECTS ───────────────────────────────────────────
+async function renderP() {
+  const g = document.getElementById('pgrid');
+  g.innerHTML = '<div class="pload">⏳ Loading projects…</div>';
+  try {
+    if (isAdmin) {
+      const { count } = await sb.from('projects').select('*', { count:'exact', head:true });
+      if (count === 0) { for (const p of DEFAULTS) await sb.from('projects').insert(p); }
+    }
+    const { data: ps, error } = await sb.from('projects').select('*').order('id', { ascending:true });
+    if (error) throw error;
+    if (!ps || !ps.length) {
+      g.innerHTML = '<div class="empty"><span>📂</span>No projects yet.<br/>Login as admin and click <strong>＋ Add Project</strong> to add your work.</div>';
+      return;
+    }
+    g.innerHTML = ps.map((p, i) => `
+      <div class="pc fu" style="transition-delay:${i*.04}s">
+        <button class="pdel" onclick="delP(${p.id})" title="Delete project">×</button>
+        <div class="ptop" style="background:${esc(p.color||'#1a3a5c')}">
+          <div class="pnum">${String(i+1).padStart(2,'0')}</div>
+          <div class="pname">${esc(p.title)}</div>
+        </div>
+        <div class="pbdy">
+          <p class="pdsc">${esc(p.description)}</p>
+          <div class="ptls">${(p.tools||'').split(',').map(x=>x.trim()).filter(Boolean).map(x=>`<span class="tbdg">${esc(x)}</span>`).join('')}</div>
+          <div class="plnks">
+            ${p.github_link ? `<a href="${esc(p.github_link)}" target="_blank" class="plnk">View on GitHub →</a>` : ''}
+            ${p.file_url    ? `<a href="${esc(p.file_url)}" target="_blank" download class="pdl">⬇ Download File</a>` : ''}
+          </div>
+        </div>
+      </div>`).join('');
+    g.querySelectorAll('.fu').forEach(el => { obs.observe(el); setTimeout(() => el.classList.add('vis'), 80); });
+  } catch(e) {
+    g.innerHTML = `<div class="empty"><span>⚠️</span>Could not load projects.<br/><small style="font-size:11px;opacity:.5">${e.message}</small></div>`;
+    console.error(e);
+  }
+}
+
+// ── ADD PROJECT ───────────────────────────────────────────────
+async function addProject() {
+  const title       = document.getElementById('pt').value.trim();
+  const description = document.getElementById('pd').value.trim();
+  if (!title)       { toast('⚠ Please enter a project title'); return; }
+  if (!description) { toast('⚠ Please enter a description');   return; }
+
+  const btn = document.getElementById('addBtn');
+  btn.disabled = true;
+  let file_url = '';
+
+  if (chosenFile) {
+    btn.textContent = 'Uploading file…';
+    document.getElementById('fupstatus').textContent = '⏳ Uploading to Supabase Storage…';
+    try {
+      file_url = await uploadFile(chosenFile);
+      document.getElementById('fupstatus').textContent = '✓ Uploaded successfully!';
+    } catch(err) {
+      toast('⚠ ' + err.message);
+      btn.textContent = 'Add Project'; btn.disabled = false;
+      return;
+    }
+  }
+
+  btn.textContent = 'Saving…';
+  const { error } = await sb.from('projects').insert({
+    title, description,
+    tools:       document.getElementById('ptools').value.trim(),
+    github_link: document.getElementById('pglink').value.trim(),
+    file_url,
+    color:       document.getElementById('pcolor').value
+  });
+
+  btn.textContent = 'Add Project'; btn.disabled = false;
+
+  if (error) { toast('Error: ' + error.message); console.error(error); return; }
+
+  // Reset form
+  closeMod('pm');
+  ['pt','pd','ptools','pglink'].forEach(id => document.getElementById(id).value = '');
+  document.getElementById('pcolor').value = '#1a3a5c';
+  document.getElementById('pfile').value = '';
+  document.getElementById('fupname').style.display = 'none';
+  document.getElementById('fupname').textContent = '';
+  document.getElementById('fupstatus').textContent = 'Supported: .xlsx, .pbix, .pdf, .csv, .zip · Max 50 MB · Stored in Supabase Storage';
+  chosenFile = null;
+
+  await renderP();
+  toast('✓ Project added! Download link is live for all visitors.');
+}
+
+// ── DELETE PROJECT ────────────────────────────────────────────
+async function delP(id) {
+  if (!confirm('Delete this project? This cannot be undone.')) return;
+  // Also remove file from storage
+  try {
+    const { data: proj } = await sb.from('projects').select('file_url').eq('id', id).single();
+    if (proj && proj.file_url) {
+      const url = new URL(proj.file_url);
+      const marker = '/object/public/' + BUCKET + '/';
+      const idx = url.pathname.indexOf(marker);
+      if (idx !== -1) {
+        const storagePath = decodeURIComponent(url.pathname.slice(idx + marker.length));
+        await sb.storage.from(BUCKET).remove([storagePath]);
+      }
+    }
+  } catch(e) { console.warn('Storage delete skipped:', e.message); }
+
+  const { error } = await sb.from('projects').delete().eq('id', id);
+  if (error) { toast('Error: ' + error.message); return; }
+  await renderP();
+  toast('✓ Project deleted.');
+}
+
+// ── UI HELPERS ────────────────────────────────────────────────
+window.addEventListener('scroll', () => {
+  const d = document.documentElement;
+  document.getElementById('prog').style.width = (d.scrollTop / (d.scrollHeight - d.clientHeight) * 100) + '%';
+});
+function toggleDark() {
+  document.body.classList.toggle('dark');
+  const dk = document.body.classList.contains('dark');
+  document.querySelectorAll('#dt,#mdt').forEach(b => b.textContent = dk ? '☀️' : '🌙');
+  localStorage.setItem('dm', dk);
+}
+if (localStorage.getItem('dm') === 'true') {
+  document.body.classList.add('dark');
+  document.querySelectorAll('#dt,#mdt').forEach(b => b.textContent = '☀️');
+}
+const navEl = document.getElementById('nav');
+window.addEventListener('scroll', () => {
+  navEl.classList.toggle('sc', window.scrollY > 80);
+  let cur = '';
+  document.querySelectorAll('section[id],div[id]').forEach(s => { if (window.scrollY >= s.offsetTop - 130) cur = s.id; });
+  document.querySelectorAll('.nlinks a[data-s]').forEach(a => a.classList.toggle('act', a.dataset.s === cur));
+});
+function toggleMenu() {
+  const m = document.getElementById('mmenu'), b = document.getElementById('hbg');
+  m.classList.toggle('op'); b.classList.toggle('op');
+  document.body.style.overflow = m.classList.contains('op') ? 'hidden' : '';
+}
+function closeMenu() {
+  document.getElementById('mmenu').classList.remove('op');
+  document.getElementById('hbg').classList.remove('op');
+  document.body.style.overflow = '';
+}
+function chkMDT() { document.getElementById('mdt').style.display = window.innerWidth <= 900 ? 'block' : 'none'; }
+window.addEventListener('resize', chkMDT); chkMDT();
+
+const obs = new IntersectionObserver(entries => {
+  entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('vis'); if (e.target.id === 'profwrap') animBars(); } });
+}, { threshold:.1 });
+document.querySelectorAll('.fu').forEach(el => obs.observe(el));
+setTimeout(() => document.querySelectorAll('#hero .fu').forEach(el => el.classList.add('vis')), 100);
+
+const profs = [
+  {n:'Microsoft Excel',p:95},{n:'SQL / MySQL',p:88},
+  {n:'Power BI',p:85},{n:'DAX',p:80},
+  {n:'Data Cleaning',p:92},{n:'Tableau',p:75},
+  {n:'Google Sheets',p:90},{n:'Python (Pandas)',p:70}
+];
+document.getElementById('profgrid').innerHTML = profs.map((p,i) =>
+  `<div><div class="phd"><span class="pn">${p.n}</span><span class="pp">${p.p}%</span></div>
+  <div class="pb"><div class="pf" id="pf${i}" data-p="${p.p}"></div></div></div>`
+).join('');
+let bDone = false;
+function animBars() {
+  if (bDone) return; bDone = true;
+  profs.forEach((_,i) => setTimeout(() => { const el = document.getElementById('pf'+i); if (el) el.style.width = el.dataset.p+'%'; }, i*80));
+}
+function changePhoto(input) {
+  if (!isAdmin) return;
+  const file = input.files[0]; if (!file) return;
+  const reader = new FileReader();
+  reader.onload = e => { document.getElementById('profileImg').src = e.target.result; toast('✓ Photo previewed. Save as profile.jpg to make permanent.'); };
+  reader.readAsDataURL(file);
+}
+function toast(msg) {
+  const t = document.getElementById('toast');
+  t.textContent = msg; t.classList.add('show');
+  setTimeout(() => t.classList.remove('show'), 3500);
+}
+function copyEmail() {
+  navigator.clipboard.writeText('omotolaniayinke863@gmail.com').then(() => toast('✓ Email copied!')).catch(() => toast('Email: omotolaniayinke863@gmail.com'));
+}
+function handleSub(e) {
+  if (e.target.action.includes('YOUR_FORM_ID')) {
+    e.preventDefault();
+    const btn = document.getElementById('subbtn');
+    btn.textContent = '✓ Sent!'; btn.style.background = '#d4edda'; btn.style.color = '#155724';
+    setTimeout(() => { btn.textContent = 'Send Message →'; btn.style.background = ''; btn.style.color = ''; e.target.reset(); }, 3000);
+  }
+}
+function openMod(id) { document.getElementById(id).classList.add('op'); document.body.style.overflow = 'hidden'; }
+function closeMod(id) { document.getElementById(id).classList.remove('op'); document.body.style.overflow = ''; }
+function bgClose(e, id) { if (e.target === document.getElementById(id)) closeMod(id); }
+
+checkSession().then(() => renderP());
+</script>
+</body>
+</html>
