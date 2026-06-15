@@ -20,6 +20,68 @@ const DEFAULTS = [
   {title:'Data Cleaning & Text Transformation',description:'Cleaned and standardised messy datasets using TRIM, PROPER, UPPER, LOWER and email formatting across full name and student registration data.',tools:'Excel, Data Cleaning, Text Functions',github_link:'https://github.com/AjibadeOmotola/EXCEL_PROJECT',file_url:'',color:'#1a3a4a'},
   {title:'Employee Data — Sort, Filter & Conditional Analysis',description:'Applied SUMIFS, AVERAGEIFS, and COUNTIFS to an employee dataset to analyse compensation, ratings, and benefits across departments.',tools:'Excel, SUMIFS, Sort & Filter',github_link:'https://github.com/AjibadeOmotola/EXCEL_PROJECT',file_url:'',color:'#2a4a1a'},
   {title:'Excel Functions Mastery — IF, SUMIF, Pivot & Dashboard',description:'Comprehensive project covering IF logic, DSUM, database functions, multi-level sorting, subtotals, and Pivot Table dashboards on satisfaction datasets.',tools:'Excel, IF/SUMIF, Pivot Tables, Dashboard',github_link:'https://github.com/AjibadeOmotola/EXCEL_PROJECT',file_url:'',color:'#4a1a2a'}
+  {
+  title:'Northwind Trader Sales Dashboard',
+  description:'Developed an interactive Power BI dashboard using Northwind Traders data to track sales performance, product trends, customer activity, and business KPIs for decision-making.',
+  tools:'Power BI, DAX, Data Visualisation',
+  github_link:'https://github.com/AjibadeOmotola/POWER-BI_PROJECTS',
+  file_url:'',
+  color:'#1a3a5c'
+},
+
+{
+  title:'Pizza Sales Analytics Dashboard',
+  description:'Analysed pizza sales performance to identify top-selling products, revenue trends, peak sales periods, and customer purchasing patterns through interactive Power BI visualisations.',
+  tools:'Power BI, DAX, Data Analysis',
+  github_link:'https://github.com/AjibadeOmotola/POWER-BI_PROJECTS',
+  file_url:'',
+  color:'#1a4a6e'
+},
+
+{
+  title:'Sales Calculation & KPI Dashboard',
+  description:'Created calculated measures and KPIs using DAX to evaluate sales performance, revenue growth, profitability, and business metrics within Power BI.',
+  tools:'Power BI, DAX, KPI Analysis',
+  github_link:'https://github.com/AjibadeOmotola/POWER-BI_PROJECTS',
+  file_url:'',
+  color:'#14455c'
+},
+
+{
+  title:'Spotify Music Streaming Dashboard',
+  description:'Built an interactive dashboard analysing Spotify music data, highlighting artist performance, streaming trends, popular tracks, and listener engagement metrics.',
+  tools:'Power BI, Data Visualisation, Analytics',
+  github_link:'https://github.com/AjibadeOmotola/POWER-BI_PROJECTS',
+  file_url:'',
+  color:'#1f3a5c'
+},
+
+{
+  title:'US Dashboard Analysis',
+  description:'Designed a Power BI dashboard to analyse US-based business data, tracking key performance indicators, trends, and regional insights through interactive visualisations.',
+  tools:'Power BI, Dashboard Design, Analytics',
+  github_link:'https://github.com/AjibadeOmotola/POWER-BI_PROJECTS',
+  file_url:'',
+  color:'#243b55'
+},
+
+{
+  title:'Data Cleaning & Transformation Project',
+  description:'Cleaned, transformed, and modelled raw datasets using Power Query to improve data quality, consistency, and reporting readiness for business analysis.',
+  tools:'Power BI, Power Query, Data Transformation',
+  github_link:'https://github.com/AjibadeOmotola/POWER-BI_PROJECTS',
+  file_url:'',
+  color:'#1a4a3a'
+},
+
+{
+  title:'Advanced DAX Calculations Project',
+  description:'Applied advanced DAX formulas including calculated columns, measures, time intelligence functions, and KPI metrics to enhance analytical reporting in Power BI.',
+  tools:'Power BI, DAX, Data Modelling',
+  github_link:'https://github.com/AjibadeOmotola/POWER-BI_PROJECTS',
+  file_url:'',
+  color:'#3a1a4a'
+}
 ];
 
 const esc = s => String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
