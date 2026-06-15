@@ -9,33 +9,25 @@ let isAdmin = false, logoClicks = 0, logoTimer = null, chosenFile = null;
 
 // ── DEFAULTS ──────────────────────────────────────────────────
 const DEFAULTS = [
-  {title:'Customer Retention (Churn) Analysis',description:'End-to-end churn analysis identifying 3 key retention drivers. Built an interactive Power BI dashboard tracking churn rate, customer segments, and KPIs to support strategic decisions.',tools:'SQL, Power BI, DAX',github_link:'https://github.com/Tola-11/customer-churn-analysis',file_url:'',color:'#1a3a5c'},
-  {title:'Sales & Marketing Data Analysis',description:'Cleaned and transformed multi-source sales datasets. Developed regional performance dashboards in Power BI, delivering insights for sales planning and resource allocation.',tools:'Excel, SQL, Power BI',github_link:'https://github.com/Tola-11/sales-marketing-analysis',file_url:'',color:'#1a4a6e'},
-  {title:'Excel Reporting Automation',description:'Automated weekly management reporting using Power Query and Pivot Tables, reducing manual effort by ~75%. Produced executive-ready dashboards for faster decision-making.',tools:'Excel, Power Query, Pivot Tables',github_link:'https://github.com/Tola-11/excel-reporting-automation',file_url:'',color:'#14455c'},
-  {title:'Market Research Analysis',description:'Analysed customer demographics and emerging market trends. Presented findings through visual summaries to guide business strategy and stakeholder decisions.',tools:'Google Sheets, Data Visualisation',github_link:'https://github.com/Tola-11/market-research-analysis',file_url:'',color:'#1f3a5c'},
-  {title:'Restaurant Orders Analysis',description:'Uncovered most/least ordered items, peak order times, highest-spending orders, and menu expansion opportunities from a real-world restaurant dataset.',tools:'Power BI, SQL, Excel',github_link:'https://github.com/Tola-11/restaurant-orders-analysis',file_url:'',color:'#243b55'},
-  {title:'Coca-Cola Sales Analysis & Dashboard',description:'Analysed Coca-Cola sales data to identify the top profitable region. Built a Pivot Table analysis and interactive Excel dashboard for KPI tracking.',tools:'Excel, Pivot Tables, Dashboard',github_link:'https://github.com/Tola-11/DATA_ANALYST_PORTFOLIO',file_url:'',color:'#1a4a3a'},
-  {title:'HP Nigeria Sales Dashboard',description:'Built a full Excel data visualization dashboard using HP Nigeria sales data to track sales performance, trends, and KPIs across regions.',tools:'Excel, Data Visualization, Dashboard',github_link:'https://github.com/Tola-11/DATA_ANALYST_PORTFOLIO',file_url:'',color:'#3a1a4a'},
-  {title:'VLOOKUP & HR Salary Checker',description:'Built an HR salary checker tool using VLOOKUP to automate employee salary lookups across a masterlist — a real-world HR data management solution.',tools:'Excel, VLOOKUP, HR Data',github_link:'https://github.com/Tola-11/DATA_ANALYST_PORTFOLIO',file_url:'',color:'#4a3a1a'},
-  {title:'Data Cleaning & Text Transformation',description:'Cleaned and standardised messy datasets using TRIM, PROPER, UPPER, LOWER and email formatting across full name and student registration data.',tools:'Excel, Data Cleaning, Text Functions',github_link:'https://github.com/Tola-11/DATA_ANALYST_PORTFOLIO',file_url:'',color:'#1a3a4a'},
-  {title:'Employee Data — Sort, Filter & Conditional Analysis',description:'Applied SUMIFS, AVERAGEIFS, and COUNTIFS to an employee dataset to analyse compensation, ratings, and benefits across departments.',tools:'Excel, SUMIFS, Sort & Filter',github_link:'https://github.com/Tola-11/DATA_ANALYST_PORTFOLIO',file_url:'',color:'#2a4a1a'},
-  {title:'Excel Functions Mastery — IF, SUMIF, Pivot & Dashboard',description:'Comprehensive project covering IF logic, DSUM, database functions, multi-level sorting, subtotals, and Pivot Table dashboards on satisfaction datasets.',tools:'Excel, IF/SUMIF, Pivot Tables, Dashboard',github_link:'https://github.com/Tola-11/DATA_ANALYST_PORTFOLIO',file_url:'',color:'#4a1a2a'}
+  {title:'Customer Retention (Churn) Analysis',description:'End-to-end churn analysis identifying 3 key retention drivers. Built an interactive Power BI dashboard tracking churn rate, customer segments, and KPIs to support strategic decisions.',tools:'SQL, Power BI, DAX',github_link:'https://github.com/AjibadeOmotola/EXCEL_PROJECT',file_url:'',color:'#1a3a5c'},
+  {title:'Sales & Marketing Data Analysis',description:'Cleaned and transformed multi-source sales datasets. Developed regional performance dashboards in Power BI, delivering insights for sales planning and resource allocation.',tools:'Excel, SQL, Power BI',github_link:'https://github.com/AjibadeOmotola/EXCEL_PROJECT',file_url:'',color:'#1a4a6e'},
+  {title:'Excel Reporting Automation',description:'Automated weekly management reporting using Power Query and Pivot Tables, reducing manual effort by ~75%. Produced executive-ready dashboards for faster decision-making.',tools:'Excel, Power Query, Pivot Tables',github_link:'https://github.com/AjibadeOmotola/EXCEL_PROJECT',file_url:'',color:'#14455c'},
+  {title:'Market Research Analysis',description:'Analysed customer demographics and emerging market trends. Presented findings through visual summaries to guide business strategy and stakeholder decisions.',tools:'Google Sheets, Data Visualisation',github_link:'https://github.com/AjibadeOmotola/EXCEL_PROJECT',file_url:'',color:'#1f3a5c'},
+  {title:'Restaurant Orders Analysis',description:'Uncovered most/least ordered items, peak order times, highest-spending orders, and menu expansion opportunities from a real-world restaurant dataset.',tools:'Power BI, SQL, Excel',github_link:'https://github.com/AjibadeOmotola/EXCEL_PROJECT',file_url:'',color:'#243b55'},
+  {title:'Coca-Cola Sales Analysis & Dashboard',description:'Analysed Coca-Cola sales data to identify the top profitable region. Built a Pivot Table analysis and interactive Excel dashboard for KPI tracking.',tools:'Excel, Pivot Tables, Dashboard',github_link:'https://github.com/AjibadeOmotola/EXCEL_PROJECT',file_url:'',color:'#1a4a3a'},
+  {title:'HP Nigeria Sales Dashboard',description:'Built a full Excel data visualization dashboard using HP Nigeria sales data to track sales performance, trends, and KPIs across regions.',tools:'Excel, Data Visualization, Dashboard',github_link:'https://github.com/AjibadeOmotola/EXCEL_PROJECT',file_url:'',color:'#3a1a4a'},
+  {title:'VLOOKUP & HR Salary Checker',description:'Built an HR salary checker tool using VLOOKUP to automate employee salary lookups across a masterlist — a real-world HR data management solution.',tools:'Excel, VLOOKUP, HR Data',github_link:'https://github.com/AjibadeOmotola/EXCEL_PROJECT',file_url:'',color:'#4a3a1a'},
+  {title:'Data Cleaning & Text Transformation',description:'Cleaned and standardised messy datasets using TRIM, PROPER, UPPER, LOWER and email formatting across full name and student registration data.',tools:'Excel, Data Cleaning, Text Functions',github_link:'https://github.com/AjibadeOmotola/EXCEL_PROJECT',file_url:'',color:'#1a3a4a'},
+  {title:'Employee Data — Sort, Filter & Conditional Analysis',description:'Applied SUMIFS, AVERAGEIFS, and COUNTIFS to an employee dataset to analyse compensation, ratings, and benefits across departments.',tools:'Excel, SUMIFS, Sort & Filter',github_link:'https://github.com/AjibadeOmotola/EXCEL_PROJECT',file_url:'',color:'#2a4a1a'},
+  {title:'Excel Functions Mastery — IF, SUMIF, Pivot & Dashboard',description:'Comprehensive project covering IF logic, DSUM, database functions, multi-level sorting, subtotals, and Pivot Table dashboards on satisfaction datasets.',tools:'Excel, IF/SUMIF, Pivot Tables, Dashboard',github_link:'https://github.com/AjibadeOmotola/EXCEL_PROJECT',file_url:'',color:'#4a1a2a'}
 ];
 
 const esc = s => String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
 
 // ── OPEN FILE VIEWER ──────────────────────────────────────────
-// Generates the correct viewer URL based on file type.
-// - Excel / CSV / Word / PowerPoint → Microsoft Office Online viewer
-// - Jupyter notebooks (.ipynb)      → nbviewer.org
-// - SQL / Python / plain text       → open file directly in new tab
-// - Power BI (.pbix) / zip / pdf    → download only (no browser viewer)
 function getViewUrl(fileUrl) {
   if (!fileUrl) return null;
 
-  // Convert GitHub blob URLs to raw URLs so Office Online / nbviewer can access the file directly
-  // From: https://github.com/Tola-11/REPO/blob/main/file.xlsx
-  // To:   https://raw.githubusercontent.com/Tola-11/REPO/main/file.xlsx
   if (fileUrl.includes('github.com') && fileUrl.includes('/blob/')) {
     fileUrl = fileUrl
       .replace('github.com', 'raw.githubusercontent.com')
@@ -45,23 +37,19 @@ function getViewUrl(fileUrl) {
   const lower = fileUrl.toLowerCase();
   const encoded = encodeURIComponent(fileUrl);
 
-  // Office Online viewer — Excel, CSV, Word, PowerPoint
   if (/\.(xlsx|xls|csv|docx|pptx)(\?|$)/.test(lower)) {
     return `https://view.officeapps.live.com/op/view.aspx?src=${encoded}`;
   }
 
-  // Jupyter notebooks
   if (/\.ipynb(\?|$)/.test(lower)) {
     const stripped = fileUrl.replace(/^https?:\/\//, '');
     return `https://nbviewer.org/urls/${stripped}`;
   }
 
-  // Plain text files — open directly
   if (/\.(sql|py|txt|md)(\?|$)/.test(lower)) {
     return fileUrl;
   }
 
-  // .pbix, .pdf, .zip → no viewer available, download only
   return null;
 }
 
@@ -123,7 +111,6 @@ function fileChosen(input) {
   document.getElementById('fupstatus').textContent = 'File ready — will upload when you click Add Project.';
 }
 
-// Drag highlight
 const fz = document.getElementById('fupzone');
 fz.addEventListener('dragover', e => { e.preventDefault(); fz.classList.add('drag'); });
 fz.addEventListener('dragleave', () => fz.classList.remove('drag'));
@@ -231,7 +218,6 @@ async function addProject() {
 
   if (error) { toast('Error: ' + error.message); console.error(error); return; }
 
-  // Reset form
   closeMod('pm');
   ['pt','pd','ptools','pglink'].forEach(id => document.getElementById(id).value = '');
   document.getElementById('pcolor').value = '#1a3a5c';
@@ -305,7 +291,7 @@ function closeMenu() {
 function chkMDT() { document.getElementById('mdt').style.display = window.innerWidth <= 900 ? 'block' : 'none'; }
 window.addEventListener('resize', chkMDT); chkMDT();
 
-// ── INTERSECTION OBSERVER (scroll animations) ─────────────────
+// ── INTERSECTION OBSERVER ─────────────────────────────────────
 const obs = new IntersectionObserver(entries => {
   entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('vis'); if (e.target.id === 'profwrap') animBars(); } });
 }, { threshold:.1 });
