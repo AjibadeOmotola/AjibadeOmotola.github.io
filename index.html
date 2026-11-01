@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Omotolani Ajibade | Data &amp; Business Analyst – Power BI, SQL, Excel | Lagos</title>
+<meta name="description" content="Omotolani Ajibade is a Data and Business Analyst in Lagos, Nigeria. SQL, Power BI, DAX and Excel dashboards that help teams reduce churn and make decisions.">
+<!-- TODO: replace with your real domain once you have one -->
+<link rel="canonical" href="https://omotola-portfolio.vercel.app/">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Omotolani Ajibade – Data &amp; Business Analyst">
+<meta property="og:description" content="SQL, Power BI and Excel dashboards that turn messy data into decisions. Open to roles.">
+<meta property="og:url" content="https://omotola-portfolio.vercel.app/">
+<!-- TODO: add a 1200x630 image named og.png in the same folder -->
+<meta property="og:image" content="https://omotola-portfolio.vercel.app/og.png">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="theme-color" content="#f2f5f7">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%230f6f7d'/%3E%3Ctext x='32' y='44' font-size='34' font-family='sans-serif' font-weight='700' text-anchor='middle' fill='white'%3EOA%3C/text%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700&family=IBM+Plex+Sans:wght@400;500&display=swap" rel="stylesheet">
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"Person","name":"Omotolani Ajibade","jobTitle":"Data Analyst and Business Analyst","address":{"@type":"PostalAddress","addressLocality":"Lagos","addressCountry":"NG"},"alumniOf":"Kwara State University","url":"https://omotola-portfolio.vercel.app/","sameAs":["https://www.linkedin.com/in/omotola-ajibade-70552135a","https://github.com/AjibadeOmotola"]}
+</script>
+<style>
+:root{--bg:#f2f5f7;--surface:#fff;--ink:#12263a;--muted:#4a5d6e;--line:#d5dde4;--accent:#0f6f7d;--accent-ink:#fff;--hl:#f0b429;--todo:#b45309;--r:10px}
+:root[data-theme="dark"]{--bg:#0f1b26;--surface:#162636;--ink:#e8eff5;--muted:#9fb3c4;--line:#27394a;--accent:#4cc3d3;--accent-ink:#0b1620;--hl:#f0b429;--todo:#fbbf24}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#0f1b26;--surface:#162636;--ink:#e8eff5;--muted:#9fb3c4;--line:#27394a;--accent:#4cc3d3;--accent-ink:#0b1620;--todo:#fbbf24}}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth;scroll-padding-top:72px}
+body{margin:0;background:var(--bg);color:var(--ink);font:400 1.0625rem/1.65 "IBM Plex Sans",system-ui,sans-serif;-webkit-font-smoothing:antialiased}
+h1,h2,h3{font-family:"Bricolage Grotesque","IBM Plex Sans",system-ui,sans-serif;line-height:1.12;margin:0;letter-spacing:-.01em}
+h2{font-size:clamp(1.7rem,3.5vw,2.3rem);margin-bottom:1.5rem}
+h3{font-size:1.2rem;margin-bottom:.4rem}
+p{margin:0 0 1rem;max-width:68ch}
+a{color:var(--accent)}
+:focus-visible{outline:3px solid var(--hl);outline-offset:3px;border-radius:4px}
+.skip{position:absolute;left:-999px;top:8px;background:var(--ink);color:var(--bg);padding:.5rem 1rem;z-index:99}
+.skip:focus{left:8px}
+.wrap{max-width:1040px;margin:0 auto;padding:0 1.25rem}
+section{padding:4.5rem 0;border-top:1px solid var(--line)}
+header.nav{position:sticky;top:0;z-index:10;background:color-mix(in srgb,var(--bg) 92%,transparent);backdrop-filter:blur(8px);border-bottom:1px solid var(--line)}
+.nav .wrap{display:flex;align-items:center;gap:1rem;min-height:60px}
+.brand{font:700 1.05rem "Bricolage Grotesque",sans-serif;color:var(--ink);text-decoration:none;margin-right:auto}
+.nav nav{display:flex;gap:1.1rem;flex-wrap:wrap}
+.nav nav a{color:var(--muted);text-decoration:none;font-size:.95rem}
+.nav nav a:hover{color:var(--ink)}
+.icon-btn{background:none;border:1px solid var(--line);color:var(--ink);border-radius:8px;padding:.35rem .6rem;cursor:pointer;font:inherit;font-size:.9rem}
+.btn{display:inline-block;padding:.7rem 1.2rem;border-radius:8px;font-weight:500;text-decoration:none;border:1px solid var(--accent);font-size:1rem;cursor:pointer;font-family:inherit}
+.btn.primary{background:var(--accent);color:var(--accent-ink)}
+.btn.ghost{background:transparent;color:var(--accent)}
+.btn:hover{filter:brightness(1.08)}
+/* hero */
+.hero{padding:4rem 0 4.5rem;border:0}
+.hero .grid{display:grid;grid-template-columns:1.25fr 1fr;gap:3rem;align-items:center}
+.status{display:inline-flex;gap:.5rem;align-items:center;font-size:.92rem;color:var(--muted);margin-bottom:1.2rem}
+.dot{width:9px;height:9px;border-radius:50%;background:#2fa56b}
+h1{font-size:clamp(2.4rem,6vw,4rem);margin-bottom:1rem}
+.lead{font-size:1.2rem;color:var(--muted)}
+.cta{display:flex;gap:.75rem;flex-wrap:wrap;margin-top:1.5rem}
+.clean{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:1rem 1.1rem;font-size:.95rem}
+.clean h2{font-size:1rem;margin:0 0 .6rem;color:var(--muted);font-family:"IBM Plex Sans",sans-serif;font-weight:500}
+.clean table{width:100%;border-collapse:collapse;font-family:ui-monospace,Menlo,Consolas,monospace;font-size:.88rem}
+.clean th{text-align:left;font-weight:500;color:var(--muted);padding:.3rem 0;border-bottom:1px solid var(--line)}
+.clean td{padding:.45rem 0;border-bottom:1px dashed var(--line)}
+.clean td:first-child{color:var(--muted);text-decoration:line-through;text-decoration-color:var(--hl)}
+.clean td:last-child{font-weight:500}
+.clean .fix{opacity:0;animation:in .5s forwards}
+@keyframes in{to{opacity:1}}
+.clean tr:nth-child(2) .fix{animation-delay:.4s}.clean tr:nth-child(3) .fix{animation-delay:.8s}.clean tr:nth-child(4) .fix{animation-delay:1.2s}.clean tr:nth-child(5) .fix{animation-delay:1.6s}
+/* cards */
+.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(290px,1fr));gap:1.25rem}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);overflow:hidden;display:flex;flex-direction:column}
+.shot{aspect-ratio:16/9;background:repeating-linear-gradient(135deg,var(--bg),var(--bg) 12px,var(--surface) 12px,var(--surface) 24px);display:grid;place-items:center;color:var(--muted);font-size:.9rem;border-bottom:1px solid var(--line);text-align:center;padding:1rem}
+.card img{width:100%;aspect-ratio:16/9;object-fit:cover;display:block}
+.card .body{padding:1.1rem 1.2rem 1.3rem;display:flex;flex-direction:column;flex:1}
+.card p{font-size:.98rem;margin-bottom:.6rem}
+.tags{display:flex;gap:.4rem;flex-wrap:wrap;margin:auto 0 .8rem;padding:0;list-style:none}
+.tags li{font-size:.8rem;border:1px solid var(--line);border-radius:99px;padding:.1rem .65rem;color:var(--muted)}
+.links{display:flex;gap:1rem;font-size:.95rem}
+.todo{color:var(--todo);font-weight:500}
+/* case study */
+.case{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:2rem}
+.steps{list-style:none;padding:0;margin:1.5rem 0 0;display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:1.25rem;counter-reset:s}
+.steps li{counter-increment:s;border-left:3px solid var(--accent);padding-left:1rem}
+.steps li::before{content:"Step " counter(s);display:block;font-size:.85rem;color:var(--muted)}
+.steps strong{display:block;font-family:"Bricolage Grotesque",sans-serif;font-size:1.1rem}
+.steps span{font-size:.97rem;color:var(--muted)}
+/* experience + skills */
+.job{display:grid;grid-template-columns:200px 1fr;gap:1.5rem;padding:1.25rem 0;border-bottom:1px solid var(--line)}
+.job:last-child{border:0}
+.when{color:var(--muted);font-size:.95rem}
+.job ul{margin:.5rem 0 0;padding-left:1.1rem;max-width:68ch}
+.job li{margin-bottom:.35rem}
+.skills{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:1.25rem}
+.skills div{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:1.1rem 1.2rem}
+.skills h3{font-size:1.05rem}
+.skills p{font-size:.97rem;margin:0;color:var(--muted)}
+/* contact */
+form{display:grid;gap:1rem;max-width:560px}
+label{display:grid;gap:.3rem;font-weight:500;font-size:.95rem}
+input,select,textarea{font:inherit;padding:.65rem .75rem;border:1px solid var(--line);border-radius:8px;background:var(--surface);color:var(--ink)}
+.hp{position:absolute;left:-9999px}
+#msg{min-height:1.5rem;font-size:.97rem}
+footer{padding:2rem 0;border-top:1px solid var(--line);color:var(--muted);font-size:.92rem}
+footer .wrap{display:flex;justify-content:space-between;gap:1rem;flex-wrap:wrap}
+@media (max-width:760px){.hero .grid,.job{grid-template-columns:1fr}.nav nav{display:none}.case{padding:1.25rem}}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}.clean .fix{animation:none;opacity:1}}
+</style>
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+
+<header class="nav">
+  <div class="wrap">
+    <a class="brand" href="#top">Omotolani Ajibade</a>
+    <nav aria-label="Primary">
+      <a href="#projects">Projects</a><a href="#case-study">Case study</a><a href="#experience">Experience</a><a href="#skills">Skills</a><a href="#contact">Contact</a>
+    </nav>
+    <button class="icon-btn" id="theme" type="button" aria-label="Switch colour theme">Theme</button>
+  </div>
+</header>
+
+<main id="main">
+<section class="hero" id="top">
+  <div class="wrap grid">
+    <div>
+      <p class="status"><span class="dot" aria-hidden="true"></span>Available now for roles: remote, hybrid or on-site</p>
+      <h1>Omotolani Ajibade</h1>
+      <p class="lead">Data and business analyst in Lagos. I clean messy data, query it in SQL, and build Power BI dashboards that teams use to decide what to do next.</p>
+      <div class="cta">
+        <a class="btn primary" href="#projects">See my projects</a>
+        <!-- TODO: export your CV as Ajibade_Omotolani_CV.pdf and put it next to this file -->
+        <a class="btn ghost" href="Ajibade_Omotolani_CV.pdf" download>Download CV (PDF)</a>
+        <a class="btn ghost" href="#contact">Contact me</a>
+      </div>
+    </div>
+    <div class="clean" aria-label="Example of data cleaning: messy values on the left, cleaned values on the right">
+      <h2>What cleaning looks like</h2>
+      <table>
+        <thead><tr><th scope="col">Raw</th><th scope="col">Clean</th></tr></thead>
+        <tbody>
+          <tr><td>"  lagos "</td><td class="fix">Lagos</td></tr>
+          <tr><td>"LAGOS"</td><td class="fix">Lagos</td></tr>
+          <tr><td>"Lagos, NG"</td><td class="fix">Lagos</td></tr>
+          <tr><td>"2025/3/4"</td><td class="fix">2025-03-04</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<section id="projects">
+  <div class="wrap">
+    <h2>Projects</h2>
+    <!-- TODO: for each card, save a screenshot in /images and replace the .shot div with:
+         <img src="images/your-shot.webp" alt="Describe the dashboard" width="800" height="450" loading="lazy">
+         Fill in the [bracketed] results and add real GitHub / report links. Delete any card you can't back up. -->
+    <div class="cards">
+      <article class="card">
+        <div class="shot">Add a screenshot of the churn dashboard</div>
+        <div class="body">
+          <h3>Customer churn dashboard</h3>
+          <p>Found why customers were leaving and gave the retention team three drivers to act on.</p>
+          <p><span class="todo">[Add one number: e.g. churn rate overall, or the highest-risk segment]</span></p>
+          <ul class="tags"><li>SQL</li><li>Power BI</li><li>DAX</li></ul>
+          <div class="links"><a href="https://github.com/AjibadeOmotola">GitHub</a><span class="todo">[Add repo or report link]</span></div>
+        </div>
+      </article>
+      <article class="card">
+        <div class="shot">Add a screenshot of the sales analysis</div>
+        <div class="body">
+          <h3>Coca-Cola sales analysis</h3>
+          <p>Looked at seasonality and regional gaps in sales data to show where the opportunities were.</p>
+          <p><span class="todo">[Add your top finding with a figure]</span></p>
+          <ul class="tags"><li>Excel</li><li>Pivot tables</li><li>Power Query</li></ul>
+          <div class="links"><span class="todo">[Add file or repo link]</span></div>
+        </div>
+      </article>
+      <article class="card">
+        <div class="shot">Add a screenshot of the report</div>
+        <div class="body">
+          <h3>Automated weekly reporting</h3>
+          <p>Replaced manual cleaning and reporting steps with a repeatable Excel workflow.</p>
+          <p><span class="todo">[Add time saved per week]</span></p>
+          <ul class="tags"><li>Excel</li><li>Power Query</li><li>Automation</li></ul>
+          <div class="links"><span class="todo">[Add file or repo link]</span></div>
+        </div>
+      </article>
+    </div>
+  </div>
+</section>
+
+<section id="case-study">
+  <div class="wrap">
+    <h2>Case study: three reasons customers left</h2>
+    <div class="case">
+      <p>The business was losing customers and didn’t know why. I compared churned and retained customers to find what set them apart.</p>
+      <ol class="steps">
+        <li><strong>Problem</strong><span>No clear picture of why customers churned.</span></li>
+        <li><strong>Approach</strong><span>Cleaned and queried the data in SQL, then segmented customers by behaviour, demographics and transaction history.</span></li>
+        <li><strong>Analysis</strong><span>Built a Power BI dashboard with DAX measures for churn rate, customer lifetime value and segment KPIs.</span></li>
+        <li><strong>Result</strong><span>Identified three churn drivers. The retention team adopted the recommendations.</span></li>
+      </ol>
+      <p style="margin-top:1.5rem"><span class="todo">[Name the three drivers in plain words, and add churn rate or revenue at risk. Numbers make this section.]</span></p>
+    </div>
+  </div>
+</section>
+
+<section id="experience">
+  <div class="wrap">
+    <h2>Experience and education</h2>
+    <div class="job">
+      <div class="when">Mar 2025 – Feb 2026<br>Lagos, Nigeria</div>
+      <div>
+        <h3>Data Analyst, Othello Institute of Technology</h3>
+        <ul>
+          <li>Built interactive Power BI dashboards with DAX for stakeholders to track performance.</li>
+          <li>Wrote and optimised SQL queries and maintained structured databases.</li>
+          <li>Cleaned and transformed large datasets so reports could be trusted.</li>
+          <li>Presented findings to non-technical teams to support strategic decisions.</li>
+          <li class="todo">[Add one result with a number, e.g. hours saved, rows processed, reports delivered]</li>
+        </ul>
+      </div>
+    </div>
+    <div class="job">
+      <div class="when">Graduated Nov 2024</div>
+      <div>
+        <h3>BSc Entrepreneurship, Kwara State University</h3>
+        <p>Business strategy and market analysis, which is why I start from the business question before touching the data.</p>
+      </div>
+    </div>
+    <div class="job">
+      <div class="when">Certifications</div>
+      <div>
+        <!-- TODO: link each certificate to its Coursera / Credly / Microsoft verification page -->
+        <ul>
+          <li>Google Data Analytics Professional Certificate (Coursera)</li>
+          <li>Microsoft Excel and Power BI Fundamentals</li>
+          <li>SQL for Data Analysis <span class="todo">[add issuer and link]</span></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="skills">
+  <div class="wrap">
+    <h2>Skills</h2>
+    <div class="skills">
+      <div><h3>Querying</h3><p>SQL, MySQL, database design</p></div>
+      <div><h3>Dashboards</h3><p>Power BI, DAX, Tableau</p></div>
+      <div><h3>Spreadsheets</h3><p>Advanced Excel, Power Query, pivot tables, Google Sheets</p></div>
+      <div><h3>Python</h3><p>Pandas for cleaning and analysis</p></div>
+      <div><h3>How I work</h3><p>KPI tracking, data storytelling, stakeholder reporting</p></div>
+    </div>
+  </div>
+</section>
+
+<section id="contact">
+  <div class="wrap">
+    <h2>Let’s work together</h2>
+    <p>I’m looking for data and business analyst roles: full-time, contract or remote. Send a message or find me online.</p>
+    <p>
+      <!-- TODO: swap in a professional address like firstname.lastname@gmail.com -->
+      <a href="mailto:omotolaniayinke863@gmail.com">omotolaniayinke863@gmail.com</a> ·
+      <a href="https://www.linkedin.com/in/omotola-ajibade-70552135a">LinkedIn</a> ·
+      <a href="https://github.com/AjibadeOmotola">GitHub</a>
+    </p>
+    <!-- TODO: create a free form at formspree.io and replace YOUR_FORM_ID -->
+    <form id="form" action="https://formspree.io/f/YOUR_FORM_ID" method="POST">
+      <label>Your name<input name="name" required autocomplete="name"></label>
+      <label>Your email<input name="email" type="email" required autocomplete="email"></label>
+      <label>What is this about?
+        <select name="topic"><option>Full-time role</option><option>Contract or freelance</option><option>Collaboration</option><option>Just saying hello</option></select>
+      </label>
+      <label>Message<textarea name="message" rows="5" required></textarea></label>
+      <input class="hp" type="text" name="_gotcha" tabindex="-1" autocomplete="off" aria-hidden="true">
+      <button class="btn primary" type="submit">Send message</button>
+      <p id="msg" role="status" aria-live="polite"></p>
+    </form>
+  </div>
+</section>
+</main>
+
+<footer>
+  <div class="wrap"><span>© <span id="yr">2026</span> Omotolani Ajibade · Lagos, Nigeria</span><a href="#top">Back to top</a></div>
+</footer>
+
+<script>
+(function(){
+  var root=document.documentElement,btn=document.getElementById('theme');
+  try{var s=localStorage.getItem('theme');if(s)root.setAttribute('data-theme',s)}catch(e){}
+  btn.addEventListener('click',function(){
+    var dark=root.getAttribute('data-theme')==='dark'||(!root.getAttribute('data-theme')&&matchMedia('(prefers-color-scheme: dark)').matches);
+    var next=dark?'light':'dark';root.setAttribute('data-theme',next);
+    try{localStorage.setItem('theme',next)}catch(e){}
+  });
+  document.getElementById('yr').textContent=new Date().getFullYear();
+  var f=document.getElementById('form'),m=document.getElementById('msg');
+  f.addEventListener('submit',function(e){
+    e.preventDefault();m.textContent='Sending…';
+    fetch(f.action,{method:'POST',body:new FormData(f),headers:{Accept:'application/json'}})
+      .then(function(r){if(!r.ok)throw 0;f.reset();m.textContent='Message sent. I’ll reply soon.'})
+      .catch(function(){m.textContent='Message not sent. Please email me directly instead.'});
+  });
+})();
+</script>
+</body>
+</html>
