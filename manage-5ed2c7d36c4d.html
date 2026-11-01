@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="UTF-8"/><meta name="viewport" content="width=device-width,initial-scale=1"/>
+<meta name="robots" content="noindex,nofollow,noarchive"/><title>Manager</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet"/>
+<link rel="stylesheet" href="styles.css"/>
+<style>
+body{background:var(--card);padding:24px}
+.box{max-width:880px;margin:0 auto}
+.panel{background:var(--white);border:1px solid var(--border);border-radius:12px;padding:28px;margin-bottom:22px}
+h1,h2{font-family:'DM Serif Display',serif;color:var(--black);margin:0 0 14px}
+label{display:block;font-size:11px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--muted);margin:14px 0 6px}
+input,textarea{width:100%;background:var(--card);border:1px solid var(--border);border-radius:6px;padding:11px 14px;font:inherit;color:var(--black)}
+textarea{height:90px;resize:vertical}
+button{font:inherit;font-weight:600;cursor:pointer;border-radius:6px;padding:10px 18px;border:1px solid var(--accent);background:var(--accent);color:#fff}
+button.s{background:transparent;color:var(--accent)} button.d{background:transparent;border-color:#e74c3c;color:#e74c3c}
+button:disabled{opacity:.5;cursor:default}
+.row{display:flex;gap:10px;flex-wrap:wrap;margin-top:18px}
+.top{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap;margin-bottom:18px}
+.ok{color:#16a34a}.bad{color:#e74c3c} #msg,#lerr{min-height:22px;font-size:14px;margin-top:10px}
+table{width:100%;border-collapse:collapse;font-size:14px} td,th{text-align:left;padding:9px 6px;border-bottom:1px solid var(--border);vertical-align:top}
+td.a{white-space:nowrap} td.a button{padding:5px 11px;font-size:13px;margin-right:6px}
+[hidden]{display:none!important}
+</style></head><body><div class="box">
+<div class="panel" id="login" style="max-width:420px;margin-top:10vh">
+  <h1>Sign in</h1>
+  <form id="lf"><label for="em">Email</label><input id="em" type="email" autocomplete="username" required/>
+  <label for="pw">Password</label><input id="pw" type="password" autocomplete="current-password" required/>
+  <div class="row"><button id="lb" type="submit">Sign in</button></div><div id="lerr" class="bad" role="alert"></div></form>
+</div>
+<div id="app" hidden>
+  <div class="top"><h1 style="margin:0">Project manager</h1><div><button class="s" onclick="location.href='index.html'">View site</button> <button class="s" id="lo">Sign out</button></div></div>
+  <div class="panel"><h2 id="ft">Add a project</h2>
+    <label for="t">Title *</label><input id="t"/>
+    <label for="d">Description *</label><textarea id="d"></textarea>
+    <label for="tl">Tools (comma-separated)</label><input id="tl" placeholder="e.g. SQL, Power BI, DAX"/>
+    <label for="g">GitHub link</label><input id="g" type="url" placeholder="https://github.com/AjibadeOmotola/..."/>
+    <label for="f">Project file (optional, max 50 MB)</label><input id="f" type="file" accept=".xlsx,.xls,.xlsb,.twbx,.pbix,.pdf,.csv,.zip,.docx,.pptx,.sql,.py,.ipynb"/>
+    <div class="row"><button id="sv">Save project</button><button class="s" id="cn" hidden>Cancel edit</button></div><div id="msg" role="status"></div>
+  </div>
+  <div class="panel"><h2>All projects <span id="cnt" style="font-size:15px;color:var(--muted)"></span></h2>
+    <div style="overflow-x:auto"><table><thead><tr><th>#</th><th>Title</th><th>Tools</th><th></th></tr></thead><tbody id="tb"></tbody></table></div></div>
+</div></div>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.0/dist/umd/supabase.js"></script>
+<script>
+const SB='https://dznbsrlgxrymmjhugtrs.supabase.co',KEY='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImR6bmJzcmxneHJ5bW1qaHVndHJzIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzQ5NTgzODYsImV4cCI6MjA5MDUzNDM4Nn0.OBykh6KPUfp2hEBU93ESZ8HXh-RLlZN7ock2PnDOEh0',BUCKET='project-files';
+const sb=supabase.createClient(SB,KEY);
+const $=id=>document.getElementById(id);
+const esc=s=>String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+let rows=[],editId=null,fails=0,idle;
+function msg(t,bad){$('msg').textContent=t;$('msg').className=bad?'bad':'ok'}
+function show(on){$('login').hidden=on;$('app').hidden=!on;clearTimeout(idle);if(on)bump()}
+function bump(){clearTimeout(idle);idle=setTimeout(()=>out('Signed out after 30 minutes of inactivity.'),30*60*1000)}
+['click','keydown','touchstart'].forEach(e=>document.addEventListener(e,()=>{if(!$('app').hidden)bump()}));
+async function out(note){await sb.auth.signOut();show(false);$('lerr').textContent=note||''}
+$('lo').onclick=()=>out('');
+$('lf').onsubmit=async e=>{
+  e.preventDefault();
+  if(fails>=5){$('lerr').textContent='Too many attempts. Wait a minute.';return}
+  $('lb').disabled=true;
+  const {error}=await sb.auth.signInWithPassword({email:$('em').value.trim(),password:$('pw').value});
+  $('pw').value='';$('lb').disabled=false;
+  if(error){fails++;if(fails>=5)setTimeout(()=>fails=0,60000);$('lerr').textContent='Sign in failed.';return}
+  fails=0;$('lerr').textContent='';show(true);load();
+};
+async function load(){
+  const {data,error}=await sb.from('projects').select('*').order('id',{ascending:false});
+  if(error){msg('Could not load: '+error.message,true);return}
+  rows=data||[];$('cnt').textContent='('+rows.length+')';
+  $('tb').innerHTML=rows.map(p=>`<tr><td>${Number(p.id)}</td><td>${esc(p.title)}</td><td>${esc(p.tools)}</td><td class="a"><button class="s" onclick="edit(${Number(p.id)})">Edit</button><button class="d" onclick="del(${Number(p.id)})">Delete</button></td></tr>`).join('');
+}
+function edit(id){
+  const p=rows.find(r=>r.id===id);if(!p)return;editId=id;
+  $('t').value=p.title||'';$('d').value=p.description||'';$('tl').value=p.tools||'';$('g').value=p.github_link||'';$('f').value='';
+  $('ft').textContent='Edit project #'+id;$('cn').hidden=false;msg('Leave the file empty to keep the current file.');scrollTo({top:0,behavior:'smooth'});
+}
+function reset(){editId=null;['t','d','tl','g','f'].forEach(i=>$(i).value='');$('ft').textContent='Add a project';$('cn').hidden=true}
+$('cn').onclick=()=>{reset();msg('')};
+async function upload(file){
+  if(file.size>50*1024*1024)throw new Error('File is larger than 50 MB');
+  const path=Date.now()+'_'+file.name.replace(/[^a-zA-Z0-9._-]/g,'_');
+  const {error}=await sb.storage.from(BUCKET).upload(path,file,{cacheControl:'3600',upsert:false,contentType:file.type||'application/octet-stream'});
+  if(error)throw new Error('Upload failed: '+error.message);
+  return sb.storage.from(BUCKET).getPublicUrl(path).data.publicUrl;
+}
+async function dropStored(url){
+  try{const m='/object/public/'+BUCKET+'/',u=new URL(url),i=u.pathname.indexOf(m);
+    if(i>-1)await sb.storage.from(BUCKET).remove([decodeURIComponent(u.pathname.slice(i+m.length))])}catch(e){}
+}
+$('sv').onclick=async()=>{
+  const title=$('t').value.trim(),description=$('d').value.trim();
+  if(!title||!description){msg('Title and description are required.',true);return}
+  $('sv').disabled=true;msg('Saving…');
+  try{
+    const rec={title,description,tools:$('tl').value.trim(),github_link:$('g').value.trim()};
+    const file=$('f').files[0],old=editId?(rows.find(r=>r.id===editId)||{}).file_url:'';
+    if(file){rec.file_url=await upload(file)}else if(!editId){rec.file_url=''}
+    const r=editId?await sb.from('projects').update(rec).eq('id',editId):await sb.from('projects').insert(rec);
+    if(r.error)throw new Error(r.error.message);
+    if(file&&old)dropStored(old);
+    reset();await load();msg('Saved. It is live on your site now.');
+  }catch(e){msg(e.message,true)}
+  $('sv').disabled=false;
+};
+async function del(id){
+  const p=rows.find(r=>r.id===id);if(!p||!confirm('Delete "'+p.title+'"? This cannot be undone.'))return;
+  const {error}=await sb.from('projects').delete().eq('id',id);
+  if(error){msg('Could not delete: '+error.message,true);return}
+  if(p.file_url)dropStored(p.file_url);
+  if(editId===id)reset();await load();msg('Deleted.');
+}
+sb.auth.getSession().then(({data:{session}})=>{show(!!session);if(session)load()});
+</script></body></html>
